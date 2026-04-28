@@ -194,9 +194,12 @@ button {
 .hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  grid-template-columns: 1fr;
   gap: 32px;
   align-items: center;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .hero-copy {
@@ -234,20 +237,47 @@ h1 {
   font-size: clamp(3rem, 6vw, 5.35rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
-  max-width: 11ch;
+  max-width: 100%;
 }
 
 .hero-subhead {
-  max-width: 34rem;
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
   color: rgba(255, 255, 255, 0.82);
   font-size: clamp(1.02rem, 2vw, 1.18rem);
   line-height: 1.7;
   margin-bottom: 30px;
 }
 
+.imessage-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.18), rgba(0, 122, 255, 0.08));
+  border: 1px solid rgba(0, 122, 255, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.imessage-strip strong {
+  color: #7ab8ff;
+}
+
+.imessage-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 14px;
   margin-bottom: 28px;
 }
@@ -308,7 +338,7 @@ h1 {
 
 .trust-bar {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   margin-top: 18px;
 }
