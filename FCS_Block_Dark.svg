@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="110" viewBox="0 0 380 110">
+  <g transform="translate(6, 10)">
+    <rect x="0" y="0" width="90" height="80" fill="#F5F6F8"/>
+    <rect x="0" y="80" width="90" height="10" fill="#E87722"/>
+    <text x="45" y="56" font-family="'Barlow Semi Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="40" fill="#1C3557" text-anchor="middle" letter-spacing="-1">FCS</text>
+  </g>
+  <g transform="translate(114, 0)">
+    <text x="0" y="46" font-family="'Barlow Semi Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#FFFFFF" letter-spacing="-0.3">FULL CALENDAR</text>
+    <text x="0" y="74" font-family="'Barlow Semi Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#FFFFFF" letter-spacing="-0.3">SYSTEMS</text>
+    <line x1="0" y1="82" x2="200" y2="82" stroke="#E87722" stroke-width="3"/>
+  </g>
+</svg>

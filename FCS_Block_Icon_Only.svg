@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect x="15" y="15" width="170" height="151" fill="#1C3557"/>
+  <rect x="15" y="166" width="170" height="19" fill="#E87722"/>
+  <text x="100" y="115" font-family="'Barlow Semi Condensed', 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="#F5F6F8" text-anchor="middle" letter-spacing="-2">FCS</text>
+</svg>
