@@ -1015,6 +1015,14 @@ h1 {
   color: var(--white);
 }
 
+.consent-disclaimer {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+  font-style: italic;
+}
+
 .faq-list {
   display: grid;
   gap: 14px;
