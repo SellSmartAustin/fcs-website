@@ -124,6 +124,80 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 }
 
+const heroPhoneWrap = document.querySelector(".hero-phone-wrap");
+
+if (heroPhoneWrap) {
+  const heroMsg1 = heroPhoneWrap.querySelector(".hero-msg-1");
+  const heroTyping = heroPhoneWrap.querySelector(".hero-typing");
+  const heroMsg2 = heroPhoneWrap.querySelector(".hero-msg-2");
+  const heroRead = heroPhoneWrap.querySelector(".hero-read");
+  const heroMsg3 = heroPhoneWrap.querySelector(".hero-msg-3");
+  const heroTime = heroPhoneWrap.querySelector(".msg-time");
+  const heroAnimatedElements = [heroMsg1, heroTyping, heroMsg2, heroRead, heroMsg3, heroTime].filter(Boolean);
+  let heroPhoneTimers = [];
+
+  const clearHeroPhoneTimers = () => {
+    heroPhoneTimers.forEach((timerId) => window.clearTimeout(timerId));
+    heroPhoneTimers = [];
+  };
+
+  const resetHeroPhoneState = () => {
+    heroAnimatedElements.forEach((element) => {
+      element.classList.remove("is-visible");
+    });
+    void heroPhoneWrap.offsetWidth;
+  };
+
+  const scheduleHeroPhoneAnimation = () => {
+    clearHeroPhoneTimers();
+    resetHeroPhoneState();
+
+    const schedule = (delay, callback) => {
+      heroPhoneTimers.push(
+        window.setTimeout(() => {
+          callback();
+        }, delay)
+      );
+    };
+
+    schedule(0, () => {
+      heroMsg1?.classList.add("is-visible");
+    });
+
+    schedule(800, () => {
+      heroTyping?.classList.add("is-visible");
+    });
+
+    schedule(2300, () => {
+      heroTyping?.classList.remove("is-visible");
+      heroMsg2?.classList.add("is-visible");
+    });
+
+    schedule(3200, () => {
+      heroRead?.classList.add("is-visible");
+    });
+
+    schedule(4500, () => {
+      heroMsg3?.classList.add("is-visible");
+      heroTime?.classList.add("is-visible");
+    });
+
+    schedule(7000, () => {
+      scheduleHeroPhoneAnimation();
+    });
+  };
+
+  const startHeroPhoneAnimation = () => {
+    scheduleHeroPhoneAnimation();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startHeroPhoneAnimation, { once: true });
+  } else {
+    startHeroPhoneAnimation();
+  }
+}
+
 const qualifierForm = document.querySelector("#qualifier-form");
 
 if (qualifierForm) {
