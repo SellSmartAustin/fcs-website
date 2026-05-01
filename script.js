@@ -1,5 +1,3 @@
-const bookingUrl = "https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc";
-
 const body = document.body;
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const siteNav = document.querySelector("[data-site-nav]");
@@ -201,14 +199,6 @@ if (heroPhoneWrap) {
 const qualifierForm = document.querySelector("#qualifier-form");
 
 if (qualifierForm) {
-  qualifierForm.setAttribute("action", bookingUrl);
-  qualifierForm.setAttribute("method", "get");
-
-  qualifierForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!qualifierForm.reportValidity()) {
-      return;
-    }
-    window.location.href = bookingUrl;
-  });
+  qualifierForm.setAttribute("action", qualifierForm.getAttribute("action") || "https://formspree.io/f/PLACEHOLDER");
+  qualifierForm.setAttribute("method", qualifierForm.getAttribute("method") || "POST");
 }

@@ -356,7 +356,8 @@
             <p class="section-subhead">We work best with roofing companies spending $2,000+/month on lead generation. Answer a few quick questions to see if we're a fit.</p>
           </div>
 
-          <form class="qualifier-form reveal" id="qualifier-form">
+          <!-- TODO: replace PLACEHOLDER with real Formspree endpoint -->
+          <form class="qualifier-form reveal" id="qualifier-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
             <div class="form-grid">
               <label>
                 <span>Your Name *</span>
@@ -411,13 +412,14 @@
                 <input type="checkbox" name="marketing_consent">
                 <span> I agree to receive marketing communications from Full Calendar Systems LLC via text messages, phone calls, and emails, including service offers, updates, and related marketing content. Message frequency varies. Reply STOP to opt out. Reply HELP for help. Msg &amp; data rates may apply. Your information is secure and will not be sold or shared with third parties or affiliates for promotional purposes.</span>
               </label>
+              <p class="consent-notice">Your opt-in information will never be shared with third parties or affiliates for any purpose, including marketing.</p>
+              <p class="consent-disclaimer">Providing consent is optional and not required to submit this form or receive our services.</p>
               <div class="consent-links">
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="terms.html">Terms of Service</a>
               </div>
             </div>
 
-            <p class="consent-disclaimer">Providing consent is optional and not required to submit this form or receive our services.</p>
             <button class="btn btn-primary btn-wide" type="submit">Check My Eligibility</button>
           </form>
         </div>

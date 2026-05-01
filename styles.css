@@ -1220,12 +1220,17 @@ h1 {
   color: var(--white);
 }
 
+.consent-notice,
 .consent-disclaimer {
   margin: 12px 0 0;
   font-size: 0.82rem;
   color: var(--muted);
   text-align: center;
   font-style: italic;
+}
+
+.consent-notice {
+  color: rgba(148, 163, 184, 0.92);
 }
 
 .faq-list {
