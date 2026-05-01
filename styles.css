@@ -1205,11 +1205,11 @@ h1 {
   appearance: none;
   display: grid;
   place-content: center;
-  width: 20px;
-  height: 20px;
-  margin-top: 0.22rem;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.28rem;
   border: 1.5px solid rgba(255, 255, 255, 0.58);
-  border-radius: 4px;
+  border-radius: 3px;
   background: rgba(255, 255, 255, 0.04);
   accent-color: var(--accent);
   flex-shrink: 0;
@@ -1217,8 +1217,8 @@ h1 {
 }
 
 .consent-option input::before {
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   content: "";
   transform: scale(0);
   transition: transform 140ms ease;
