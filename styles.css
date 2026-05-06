@@ -1118,7 +1118,7 @@ h1 {
   grid-column: 1 / -1;
 }
 
-.qualifier-form label {
+.qualifier-form label:not(.consent-option) {
   display: grid;
   gap: 8px;
   color: rgba(255, 255, 255, 0.9);
