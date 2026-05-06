@@ -1130,7 +1130,7 @@ h1 {
   font-size: 0.84rem;
 }
 
-.qualifier-form input,
+.qualifier-form input:not([type="checkbox"]):not([type="radio"]),
 .qualifier-form select,
 .qualifier-form textarea {
   width: 100%;
@@ -1153,10 +1153,10 @@ h1 {
   color: rgba(148, 163, 184, 0.8);
 }
 
-.qualifier-form input:focus,
+.qualifier-form input:not([type="checkbox"]):not([type="radio"]):focus,
 .qualifier-form select:focus,
 .qualifier-form textarea:focus,
-.qualifier-form input:focus-visible,
+.qualifier-form input:not([type="checkbox"]):not([type="radio"]):focus-visible,
 .qualifier-form select:focus-visible,
 .qualifier-form textarea:focus-visible {
   outline: none;
