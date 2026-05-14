@@ -98,28 +98,28 @@ Build a single-page marketing website for Full Calendar Systems (FCS), a done-fo
   - 🔁 **30-Day Follow-Up Sequence** — We follow up with every lead for 30 days until they book or tell us no. Most roofers give up after 2 attempts.
   - 🛠️ **Full Setup Done For You** — We build everything. You're live in 7 days. You never touch a single setting.
   - 📍 **Roofing-Specific Scripts** — Our scripts are built for storm damage, insurance claims, and callbacks — not generic templates.
-  - 💰 **One Flat Monthly Fee** — No per-message fees. No usage caps. No surprises. $497/mo covers everything.
+  - 💰 **One Flat Monthly Fee** — No per-message fees. No usage caps. No surprises. One flat monthly fee covers everything.
 
 ---
 
 ### SECTION 6: PRICING
 - **Headline:** "Simple, Transparent Pricing"
 - Single pricing card (centered, premium look, amber accent):
-  - Badge: "BETA PRICING — Limited Spots"
-  - **$497 /month**
-  - Subtext: *"Full price at launch: $1,500/mo. Lock in beta pricing now."*
+  - Badge: "FOUNDING MEMBER PRICING"
+  - **$1,297 /month**
+  - Subtext: *"Standard rate: $1,997/mo. Founding members lock in $1,297/mo for life."*
   - Feature checklist (green checkmarks):
     - ✅ 60-second lead response, 24/7
     - ✅ 30-day automated follow-up
     - ✅ Estimate appointments booked to your calendar
+    - ✅ Post-estimate follow-up — we chase the close
     - ✅ Roofing-specific scripts & qualification
     - ✅ Full setup done for you
     - ✅ Works with any lead source
-    - ✅ Live in 7 days
-    - ✅ No contracts — cancel anytime with 30 days notice
-    - ✅ No setup fees
-  - CTA: "Claim Your Beta Spot" → booking link
-- Small subtext below card: *"We're accepting a limited number of beta clients. Price will increase to $1,500/mo at full launch."*
+    - ✅ Live in under 2 weeks
+    - ✅ $500 one-time setup fee
+  - CTA: "Become a Founding Member" → booking link
+- Small subtext below card: *"Founding members lock in $1,297/mo for life. Standard rate is $1,997/mo. One roofing company per city."*
 
 ---
 
