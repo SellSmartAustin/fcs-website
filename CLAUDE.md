@@ -81,7 +81,7 @@ Build a single-page marketing website for Full Calendar Systems (FCS), a done-fo
 
 ### SECTION 4: HOW IT WORKS
 - **Headline:** "Simple. Automated. Done For You."
-- **Subheadline:** "You never log into anything. You never configure anything. We handle it."
+- **Subheadline:** "You never need to log into anything. You never configure anything. We handle it."
 - 3 steps (numbered, large amber step numbers, clean layout):
   1. **Lead comes in** — From your ads, website, referrals, or a missed call. Doesn't matter the source.
   2. **We respond in 60 seconds** — Our team texts them back immediately, 24/7. We qualify them, handle their questions, and book the estimate appointment directly onto your calendar.
