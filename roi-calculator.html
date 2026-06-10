@@ -68,31 +68,31 @@
             <div class="calc-step" id="calc-step-inputs">
               <div class="calc-field">
                 <div class="calc-field-head">
-                  <span class="calc-field-label">How many leads do you get per month?</span>
-                  <span class="calc-readout" id="calc-leads-readout">40</span>
+                  <label class="calc-field-label" for="calc-leads-readout">How many leads do you get per month?</label>
+                  <input type="number" class="calc-readout-input" id="calc-leads-readout" min="5" max="300" value="40" inputmode="numeric" aria-label="Leads per month">
                 </div>
-                <input type="range" class="calc-slider" id="calc-leads" min="5" max="300" step="5" value="40" aria-label="Leads per month">
+                <input type="range" class="calc-slider" id="calc-leads" min="5" max="300" step="5" value="40" aria-label="Leads per month slider">
                 <div class="calc-slider-scale" aria-hidden="true"><span>5</span><span>300</span></div>
               </div>
 
               <div class="calc-field">
-                <span class="calc-field-label">What's your average job value?</span>
-                <div class="chip-row" id="calc-value-chips" role="group" aria-label="Average job value">
-                  <button type="button" class="chip" data-value="5000">$5,000</button>
-                  <button type="button" class="chip selected" data-value="9000">$9,000</button>
-                  <button type="button" class="chip" data-value="15000">$15,000</button>
-                  <button type="button" class="chip" data-value="25000">$25,000</button>
+                <span class="calc-field-label" id="calc-value-label">What's your average job value?</span>
+                <div class="chip-row" id="calc-value-chips" role="radiogroup" aria-labelledby="calc-value-label">
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="5000">$5,000</button>
+                  <button type="button" class="chip selected" role="radio" aria-checked="true" data-value="9000">$9,000</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="15000">$15,000</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="25000">$25,000</button>
                 </div>
               </div>
 
               <div class="calc-field">
-                <span class="calc-field-label">What's your current close rate on leads you reach?</span>
-                <div class="chip-row" id="calc-rate-chips" role="group" aria-label="Close rate">
-                  <button type="button" class="chip" data-value="0.10">10%</button>
-                  <button type="button" class="chip" data-value="0.20">20%</button>
-                  <button type="button" class="chip selected" data-value="0.30">30%</button>
-                  <button type="button" class="chip" data-value="0.40">40%</button>
-                  <button type="button" class="chip" data-value="0.50">50%</button>
+                <span class="calc-field-label" id="calc-rate-label">What's your current close rate on leads you reach?</span>
+                <div class="chip-row" id="calc-rate-chips" role="radiogroup" aria-labelledby="calc-rate-label">
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.10">10%</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.20">20%</button>
+                  <button type="button" class="chip selected" role="radio" aria-checked="true" data-value="0.30">30%</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.40">40%</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.50">50%</button>
                 </div>
               </div>
 
@@ -100,7 +100,10 @@
             </div>
 
             <!-- STEP 2 — the gate (lead capture before reveal) -->
-            <form class="calc-step calc-gate" id="calc-step-gate" hidden>
+            <form class="calc-step calc-gate" id="calc-step-gate" hidden novalidate>
+              <div class="calc-teaser" aria-hidden="true">
+                <span class="calc-teaser-num" id="calc-teaser-num">$226,800</span><span class="calc-teaser-cap">/yr</span>
+              </div>
               <div class="calc-gate-head">
                 <p class="calc-gate-title">Your number is ready.</p>
                 <p class="calc-gate-sub">Tell us who to show it to:</p>
@@ -116,12 +119,16 @@
                 </label>
                 <label>
                   <span>Phone Number *</span>
-                  <input type="tel" name="phone" required autocomplete="tel">
+                  <input type="tel" name="phone" required autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" data-phone-format>
                 </label>
                 <label>
                   <span>City <small>(optional)</small></span>
                   <input type="text" name="city" autocomplete="address-level2">
                 </label>
+              </div>
+              <!-- Honeypot — bots fill it, humans never see it. Submission is silently dropped if non-empty. -->
+              <div class="hp-wrap" aria-hidden="true">
+                <label>Company Website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
               </div>
 
               <div class="consent-block">
@@ -141,26 +148,41 @@
                 </div>
               </div>
 
-              <div id="calc-form-error" style="display:none;padding:1rem;background:#3a1a1a;border:1px solid #e74c3c;border-radius:8px;color:#e74c3c;margin-bottom:1rem;text-align:center;">
-                Something went wrong. Please email us at james@fullcalendarsystems.com
-              </div>
+              <p class="form-field-error" id="calc-field-error" hidden></p>
 
               <button class="btn btn-primary btn-wide" type="submit" id="calc-show-btn">Show My Number</button>
               <button class="calc-back-link" type="button" id="calc-back-btn">← Adjust my numbers</button>
             </form>
 
             <!-- STEP 3 — the reveal -->
-            <div class="calc-step calc-result" id="calc-step-result" hidden>
+            <div class="calc-step calc-result" id="calc-step-result" hidden tabindex="-1">
               <p class="calc-result-label">You're leaving on the table every year:</p>
               <p class="calc-big" id="calc-annual">$0</p>
               <p class="calc-sub">That's <strong id="calc-monthly">$0/mo</strong> — <span id="calc-jobs">~0 jobs/month you could be closing</span></p>
+              <div class="sr-only" id="calc-live-announce" role="status" aria-live="polite"></div>
+
+              <div class="calc-breakdown" id="calc-breakdown" aria-label="How we got your number">
+                <p class="calc-breakdown-title">Here's the math:</p>
+                <ol class="calc-breakdown-list">
+                  <li class="bd-row"><span class="bd-bar" data-bar="1"></span><span class="bd-num" id="bd-leads">40</span><span class="bd-text">leads come in every month</span></li>
+                  <li class="bd-row"><span class="bd-bar" data-bar="0.35"></span><span class="bd-num" id="bd-lost">14</span><span class="bd-text">never get a fast response <small>(industry average: ~35%)</small></span></li>
+                  <li class="bd-row"><span class="bd-bar" data-bar="0.175"></span><span class="bd-num" id="bd-recoverable">7</span><span class="bd-text">are winnable with a 60-second reply <small>(conservative 50%)</small></span></li>
+                  <li class="bd-row"><span class="bd-num" id="bd-jobs">~2</span><span class="bd-text" id="bd-jobs-text">extra jobs at your 30% close rate</span></li>
+                  <li class="bd-row bd-row-total"><span class="bd-num" id="bd-monthly">$18,900</span><span class="bd-text">walking out the door every month</span></li>
+                </ol>
+              </div>
+
               <p class="calc-footnote">Based on industry data: ~35% of inbound leads never get a fast response, and roofers who respond within 5 minutes are up to 21× more likely to qualify the lead. We apply a conservative 50% recovery rate.</p>
+
+              <p class="form-note form-note-error" id="calc-form-error" hidden>
+                Heads up — we couldn't reach our system just now, so your info may not have come through. Email us at <a href="mailto:james@fullcalendarsystems.com">james@fullcalendarsystems.com</a> and we'll take care of you.
+              </p>
 
               <div class="calc-cta">
                 <p class="calc-cta-line">You don't need more leads. You need to stop losing the ones you've got.</p>
                 <div class="calc-cta-actions">
-                  <a class="btn btn-primary" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
-                  <a class="btn btn-secondary" href="#text-echo">Text Echo Live →</a>
+                  <a class="btn btn-primary" id="calc-book-cta" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
+                  <a class="btn btn-secondary" id="calc-echo-cta" href="#text-echo">Text Echo Live →</a>
                 </div>
                 <div class="wedge-row" aria-label="What makes us different">
                   <div class="wedge-card"><span aria-hidden="true">💬</span><span>We answer via iMessage (blue bubbles)</span></div>
@@ -198,7 +220,7 @@
                       <span class="phone-contact-name">Your Roofing Co.</span>
                       <span class="phone-contact-sub">iMessage</span>
                     </div>
-                    <div class="phone-messages">
+                    <div class="phone-messages" data-echo-thread>
                       <div class="msg msg-in">Hi, do y'all do roof inspections after hail?</div>
                       <div class="msg msg-out">We do! We can have an estimator out as early as tomorrow morning — does 9am or 1pm work better?</div>
                       <div class="msg-read">✓✓ Read 9:41 AM</div>
@@ -230,15 +252,19 @@
               </div>
 
               <div data-demo-mode="fallback">
-                <form class="echo-demo-form" data-webhook="https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b">
+                <form class="echo-demo-form" data-webhook="https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b" novalidate>
                   <!-- SWAP data-webhook above: GHL_WEBHOOK_URL_DEMO — dedicated WEBSITE sub-account webhook (James to provide once the
                        website sub-account exists). Using the main FCS webhook as a TEMPORARY placeholder; the source field below
                        keeps these leads distinguishable in the meantime. -->
                   <p class="echo-demo-form-title">Want a live demo? Drop your number 👇</p>
                   <div class="echo-demo-form-row">
                     <label class="sr-only" for="echo-demo-phone-calc">Phone Number</label>
-                    <input type="tel" name="phone" id="echo-demo-phone-calc" required autocomplete="tel" placeholder="(555) 555-5555">
+                    <input type="tel" name="phone" id="echo-demo-phone-calc" required autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" data-phone-format>
                     <button class="btn btn-primary" type="submit">Text Me a Live Demo</button>
+                  </div>
+                  <!-- Honeypot -->
+                  <div class="hp-wrap" aria-hidden="true">
+                    <label>Company Website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
                   </div>
 
                   <div class="consent-block">
@@ -258,12 +284,8 @@
                     </div>
                   </div>
 
-                  <div class="echo-demo-success" style="display:none;padding:1rem;background:#1a3a1a;border:1px solid #4caf50;border-radius:8px;color:#4caf50;margin-top:1rem;text-align:center;">
-                    📲 Got it — keep an eye on your texts.
-                  </div>
-                  <div class="echo-demo-error" style="display:none;padding:1rem;background:#3a1a1a;border:1px solid #e74c3c;border-radius:8px;color:#e74c3c;margin-top:1rem;text-align:center;">
-                    Something went wrong. Please email us at james@fullcalendarsystems.com
-                  </div>
+                  <p class="form-note form-note-success echo-demo-success" hidden>📲 Got it — keep an eye on your texts.</p>
+                  <p class="form-note form-note-error echo-demo-error" hidden>Something went wrong. Please email us at <a href="mailto:james@fullcalendarsystems.com">james@fullcalendarsystems.com</a></p>
                 </form>
               </div>
             </div>
@@ -302,11 +324,20 @@
   <script>
     // ── GHL WEBHOOK — calculator leads → FCS PRODUCTION sub-account (naMSy7VSuk58oQgeKxPy) ──
     // <JAMES TO PROVIDE — dedicated calculator→Echo webhook>
-    // TODO(James): replace with the DEDICATED inbound webhook URL (new FCS workflow that fires Echo).
+    // TODO(James): replace with the DEDICATED inbound webhook URL (new FCS workflow that fires Echo —
+    // the "FCS Calc Website Form" draft workflow created 2026-06-10).
     // Until then this uses the existing FCS qualification-form webhook as a TEMPORARY placeholder so no lead is dropped;
     // the `source` field keeps calculator leads distinguishable.
-    // James also creates these GHL CUSTOM FIELDS on the FCS sub-account so Echo can open with them in conversation:
-    //   calc_leads_per_month, calc_avg_job_value, calc_close_rate, calc_monthly_revenue_lost, calc_annual_revenue_lost
+    //
+    // GHL CUSTOM FIELDS this payload populates (so Echo can open with them in conversation):
+    //   calc_leads_per_month      NUMERICAL  (sent as number)
+    //   calc_avg_job_value        NUMERICAL  (sent as number)
+    //   calc_close_rate           TEXT       (sent as "30%" — reads naturally in Echo's prompt)
+    //   calc_close_rate_pct       NUMERICAL  (sent as 30 — create this field if you ever need math on close rate)
+    //   calc_monthly_revenue_lost NUMERICAL  (sent as number)
+    //   calc_annual_revenue_lost  NUMERICAL  (sent as number)
+    //   calc_summary              TEXT       (one conversational line Echo can quote verbatim — CREATE THIS FIELD,
+    //                                         it's the single highest-leverage one for Echo's personalized open)
     const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b';
 
     // ── THE MATH (locked — see brief) ──
@@ -316,7 +347,11 @@
     const MISSED_RATE = 0.35;
     const SPEED_RECOVERY = 0.50;
 
+    const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fmtUSD = (n) => '$' + Math.round(n).toLocaleString('en-US');
+    // Honest small-number display: never inflate ("~0.4" stays ~0.4, not "~1")
+    const fmtApprox = (n) => '~' + (n >= 0.95 ? String(Math.round(n)) : (Math.round(n * 10) / 10).toFixed(1));
+    const track = (ev, props) => { if (window.fcsTrack) window.fcsTrack(ev, props); };
 
     const leadsSlider = document.getElementById('calc-leads');
     const leadsReadout = document.getElementById('calc-leads-readout');
@@ -327,28 +362,105 @@
     let jobValue = 9000;
     let closeRate = 0.30;
     let captured = false;
+    let started = false;
+    let submitting = false;
 
+    // ── restore prior visit (inputs + unlocked state; no PII is ever stored) ──
+    const STORE_KEY = 'fcs_roi_state';
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+      if (saved) {
+        if (saved.leads >= 5 && saved.leads <= 300) leadsSlider.value = saved.leads;
+        if ([5000, 9000, 15000, 25000].includes(saved.jobValue)) jobValue = saved.jobValue;
+        if ([0.10, 0.20, 0.30, 0.40, 0.50].includes(saved.closeRate)) closeRate = saved.closeRate;
+        captured = saved.captured === true;
+      }
+    } catch (_) { /* corrupted state — fall through to defaults */ }
+
+    function persist() {
+      try {
+        localStorage.setItem(STORE_KEY, JSON.stringify({
+          leads: parseInt(leadsSlider.value, 10), jobValue, closeRate, captured
+        }));
+      } catch (_) {}
+    }
+
+    function markStarted() {
+      if (started) return;
+      started = true;
+      track('roi_calc_started');
+    }
+
+    // ── slider ⇄ editable readout ──
     function paintSlider() {
       const pct = ((leadsSlider.value - leadsSlider.min) / (leadsSlider.max - leadsSlider.min)) * 100;
       leadsSlider.style.background =
         'linear-gradient(90deg, #e87722 0%, #e87722 ' + pct + '%, rgba(148,163,184,0.25) ' + pct + '%, rgba(148,163,184,0.25) 100%)';
-      leadsReadout.textContent = leadsSlider.value;
     }
-    leadsSlider.addEventListener('input', paintSlider);
+    leadsSlider.addEventListener('input', () => {
+      leadsReadout.value = leadsSlider.value;
+      paintSlider();
+      markStarted();
+    });
+    leadsReadout.addEventListener('input', () => {
+      const v = parseInt(leadsReadout.value, 10);
+      if (!isNaN(v)) {
+        leadsSlider.value = Math.min(300, Math.max(5, v));
+        paintSlider();
+      }
+      markStarted();
+    });
+    leadsReadout.addEventListener('blur', () => {
+      const v = parseInt(leadsReadout.value, 10);
+      leadsReadout.value = isNaN(v) ? leadsSlider.value : Math.min(300, Math.max(5, v));
+      leadsSlider.value = leadsReadout.value;
+      paintSlider();
+    });
+    leadsReadout.value = leadsSlider.value;
     paintSlider();
 
-    function wireChips(rowId, onPick) {
+    // ── chips as keyboard-navigable radio groups ──
+    function wireChips(rowId, initial, onPick) {
       const row = document.getElementById(rowId);
+      const chips = Array.from(row.querySelectorAll('.chip'));
+
+      function select(chip) {
+        chips.forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle('selected', on);
+          c.setAttribute('aria-checked', String(on));
+          c.tabIndex = on ? 0 : -1;
+        });
+        onPick(parseFloat(chip.dataset.value));
+        markStarted();
+      }
+
+      // roving tabindex starting point
+      chips.forEach((c) => { c.tabIndex = parseFloat(c.dataset.value) === initial ? 0 : -1; });
+
       row.addEventListener('click', (e) => {
         const chip = e.target.closest('.chip');
-        if (!chip) return;
-        row.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
-        chip.classList.add('selected');
-        onPick(parseFloat(chip.dataset.value));
+        if (chip) select(chip);
       });
+      row.addEventListener('keydown', (e) => {
+        const idx = chips.indexOf(document.activeElement);
+        if (idx === -1) return;
+        let next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = chips[(idx + 1) % chips.length];
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = chips[(idx - 1 + chips.length) % chips.length];
+        if (next) {
+          e.preventDefault();
+          next.focus();
+          select(next);
+        }
+      });
+
+      // restore persisted selection
+      const match = chips.find((c) => parseFloat(c.dataset.value) === initial);
+      if (match && !match.classList.contains('selected')) select(match);
     }
-    wireChips('calc-value-chips', (v) => { jobValue = v; });
-    wireChips('calc-rate-chips', (v) => { closeRate = v; });
+    wireChips('calc-value-chips', jobValue, (v) => { jobValue = v; });
+    wireChips('calc-rate-chips', closeRate, (v) => { closeRate = v; });
 
     function compute() {
       const leads = parseInt(leadsSlider.value, 10);
@@ -356,12 +468,7 @@
       const recoverableLeads = leadsLost * SPEED_RECOVERY;
       const recoverableJobs = recoverableLeads * closeRate;
       const monthly = recoverableJobs * jobValue;
-      return {
-        leads,
-        recoverableJobs,
-        monthly,
-        annual: monthly * 12
-      };
+      return { leads, leadsLost, recoverableLeads, recoverableJobs, monthly, annual: monthly * 12 };
     }
 
     function showStep(step) {
@@ -369,77 +476,177 @@
     }
 
     function countUp(el, target, duration) {
-      const start = performance.now();
+      if (REDUCED_MOTION) { el.textContent = fmtUSD(target) + '/yr'; return; }
+      let start = null; // anchor to the rAF clock — performance.now() runs on a subtly different timeline
+      let settled = false;
       function tick(now) {
-        const t = Math.min((now - start) / duration, 1);
+        if (settled) return;
+        if (start === null) start = now;
+        const t = Math.min(Math.max((now - start) / duration, 0), 1);
         const eased = 1 - Math.pow(1 - t, 3);
         el.textContent = fmtUSD(target * eased) + '/yr';
-        if (t < 1) requestAnimationFrame(tick);
+        if (t < 1) requestAnimationFrame(tick); else settled = true;
       }
       requestAnimationFrame(tick);
+      // guarantee the final value even if rAF is throttled (backgrounded tab etc.)
+      window.setTimeout(() => {
+        if (!settled) { settled = true; el.textContent = fmtUSD(target) + '/yr'; }
+      }, duration + 250);
+    }
+
+    function renderBreakdown(r) {
+      document.getElementById('bd-leads').textContent = r.leads;
+      document.getElementById('bd-lost').textContent = fmtApprox(r.leadsLost);
+      document.getElementById('bd-recoverable').textContent = fmtApprox(r.recoverableLeads);
+      document.getElementById('bd-jobs').textContent = fmtApprox(r.recoverableJobs);
+      document.getElementById('bd-jobs-text').innerHTML =
+        'extra job' + (r.recoverableJobs >= 1.5 || r.recoverableJobs < 0.95 ? 's' : '') +
+        ' at your ' + Math.round(closeRate * 100) + '% close rate';
+      document.getElementById('bd-monthly').textContent = fmtUSD(r.monthly);
+
+      // funnel bars (rows 1–3, proportional to leads) + staggered reveal
+      const rows = Array.from(document.querySelectorAll('.bd-row'));
+      rows.forEach((row, i) => {
+        const bar = row.querySelector('.bd-bar');
+        if (bar) bar.style.setProperty('--bar-w', (parseFloat(bar.dataset.bar) * 100) + '%');
+        row.classList.remove('bd-on');
+        if (REDUCED_MOTION) { row.classList.add('bd-on'); return; }
+        window.setTimeout(() => row.classList.add('bd-on'), 350 + i * 220);
+      });
+    }
+
+    function jobsLine(r) {
+      const plural = (r.recoverableJobs >= 1.5 || r.recoverableJobs < 0.95) ? 'jobs' : 'job';
+      return fmtApprox(r.recoverableJobs) + ' ' + plural + '/month you could be closing';
     }
 
     function revealResult() {
       const r = compute();
       document.getElementById('calc-monthly').textContent = fmtUSD(r.monthly) + '/mo';
-      document.getElementById('calc-jobs').textContent =
-        '~' + Math.max(1, Math.round(r.recoverableJobs)) + ' jobs/month you could be closing';
+      document.getElementById('calc-jobs').textContent = jobsLine(r);
+      renderBreakdown(r);
       showStep(stepResult);
       countUp(document.getElementById('calc-annual'), r.annual, 1400);
-      stepResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById('calc-live-announce').textContent =
+        'Your result: ' + fmtUSD(r.annual) + ' per year, ' + fmtUSD(r.monthly) + ' per month, ' + jobsLine(r) + '.';
+      stepResult.scrollIntoView({ behavior: REDUCED_MOTION ? 'auto' : 'smooth', block: 'center' });
+      stepResult.focus({ preventScroll: true });
+      persist();
+      track('roi_result_revealed', { annual: Math.round(r.annual), monthly: Math.round(r.monthly), leads: r.leads });
     }
 
     document.getElementById('calc-calculate-btn').addEventListener('click', () => {
+      const r = compute();
+      persist();
+      track('roi_calculate_clicked', { leads: r.leads, job_value: jobValue, close_rate: closeRate });
       if (captured) {
         revealResult();
       } else {
+        document.getElementById('calc-teaser-num').textContent = fmtUSD(r.annual);
         showStep(stepGate);
+        stepGate.querySelector('[name="name"]').focus();
+        track('roi_gate_viewed');
       }
     });
 
     document.getElementById('calc-back-btn').addEventListener('click', () => showStep(stepInputs));
-    document.getElementById('calc-recalc-btn').addEventListener('click', () => showStep(stepInputs));
+    document.getElementById('calc-recalc-btn').addEventListener('click', () => {
+      showStep(stepInputs);
+      leadsSlider.focus();
+    });
 
+    document.getElementById('calc-book-cta').addEventListener('click', () => track('roi_book_demo_clicked'));
+    document.getElementById('calc-echo-cta').addEventListener('click', () => track('roi_text_echo_clicked'));
+
+    // ── gate submit → GHL → reveal ──
     stepGate.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (submitting) return;
+
       const btn = document.getElementById('calc-show-btn');
-      const errorEl = document.getElementById('calc-form-error');
-      btn.disabled = true;
-      btn.textContent = 'One sec...';
-      errorEl.style.display = 'none';
+      const fieldError = document.getElementById('calc-field-error');
+      const webhookError = document.getElementById('calc-form-error');
+      fieldError.hidden = true;
+      webhookError.hidden = true;
 
-      const r = compute();
       const formData = new FormData(this);
-      const data = {
-        name: formData.get('name'),
-        business: formData.get('business'),
-        phone: formData.get('phone'),
-        city: formData.get('city') || '',
-        // Formatted so Echo can drop them straight into conversation from GHL custom fields
-        calc_leads_per_month: String(r.leads),
-        calc_avg_job_value: fmtUSD(jobValue),
-        calc_close_rate: Math.round(closeRate * 100) + '%',
-        calc_monthly_revenue_lost: fmtUSD(r.monthly),
-        calc_annual_revenue_lost: fmtUSD(r.annual),
-        transactional_consent: document.getElementById('calc_transactional_consent').checked,
-        marketing_consent: document.getElementById('calc_marketing_consent').checked,
-        source: 'FCS Website — ROI Calculator'
-      };
+      const name = (formData.get('name') || '').trim();
+      const business = (formData.get('business') || '').trim();
+      const phoneDigits = (formData.get('phone') || '').replace(/\D/g, '');
 
-      try {
-        await fetch(GHL_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+      if (!name || !business) {
+        fieldError.textContent = 'Please fill in your name and business name.';
+        fieldError.hidden = false;
+        this.querySelector(!name ? '[name="name"]' : '[name="business"]').focus();
+        return;
+      }
+      if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+        fieldError.textContent = 'That phone number doesn’t look complete — please double-check it.';
+        fieldError.hidden = false;
+        this.querySelector('[name="phone"]').focus();
+        return;
+      }
+
+      // Honeypot tripped → pretend success, send nothing
+      if ((formData.get('company_website') || '').trim() !== '') {
         captured = true;
         revealResult();
-      } catch (err) {
-        errorEl.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Show My Number';
+        return;
       }
+
+      submitting = true;
+      btn.disabled = true;
+      btn.textContent = 'One sec...';
+
+      const r = compute();
+      const utms = (window.fcsGetUtms && window.fcsGetUtms()) || {};
+      const summary =
+        'Losing about ' + fmtUSD(r.monthly) + '/mo (≈' + fmtUSD(r.annual) + '/yr) to slow follow-up — ' +
+        r.leads + ' leads/mo, ' + fmtUSD(jobValue) + ' avg job, ' + Math.round(closeRate * 100) + '% close rate.';
+
+      const data = Object.assign({
+        name: name,
+        business: business,
+        phone: formData.get('phone'),
+        city: (formData.get('city') || '').trim(),
+        // numbers go to NUMERICAL GHL fields; close_rate stays "30%" for its TEXT field
+        calc_leads_per_month: r.leads,
+        calc_avg_job_value: jobValue,
+        calc_close_rate: Math.round(closeRate * 100) + '%',
+        calc_close_rate_pct: Math.round(closeRate * 100),
+        calc_monthly_revenue_lost: Math.round(r.monthly),
+        calc_annual_revenue_lost: Math.round(r.annual),
+        calc_summary: summary,
+        transactional_consent: document.getElementById('calc_transactional_consent').checked,
+        marketing_consent: document.getElementById('calc_marketing_consent').checked,
+        source: 'FCS Website — ROI Calculator',
+        page: window.location.href,
+        referrer: document.referrer || ''
+      }, utms);
+
+      let delivered = false;
+      for (let attempt = 0; attempt < 2 && !delivered; attempt++) {
+        try {
+          const res = await fetch(GHL_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          delivered = res.ok;
+        } catch (_) { /* network error — retry once */ }
+        if (!delivered && attempt === 0) await new Promise((done) => setTimeout(done, 1200));
+      }
+
+      // Reveal either way — they held up their end of the deal. If the webhook
+      // failed we show a soft error on the result so the lead can reach us directly.
+      captured = true;
+      track('roi_lead_submitted', { delivered: delivered, annual: Math.round(r.annual) });
+      revealResult();
+      if (!delivered) webhookError.hidden = false;
+
+      submitting = false;
+      btn.disabled = false;
+      btn.textContent = 'Show My Number';
     });
   </script>
 </body>
