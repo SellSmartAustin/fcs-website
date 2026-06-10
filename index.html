@@ -47,6 +47,7 @@
           <a href="#how-it-works">How It Works</a>
           <a href="#what-you-get">What You Get</a>
           <a href="#pricing">Pricing</a>
+          <a href="roi-calculator.html">ROI Calculator</a>
           <a href="#faq">FAQ</a>
           <a class="btn btn-primary nav-cta" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
         </nav>
@@ -68,6 +69,7 @@
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
               <a class="btn btn-secondary" href="#how-it-works">See How It Works</a>
+              <a class="btn btn-secondary" href="roi-calculator.html">Calculate Your Lost Revenue</a>
             </div>
             <div class="trust-bar" aria-label="Key service benefits">
               <div class="trust-item"><span aria-hidden="true">⚡</span><span>60-Second Response</span></div>
@@ -332,6 +334,102 @@
         </div>
       </section>
 
+      <!-- ── TEXT ECHO LIVE ── -->
+      <section class="section section-imessage" id="text-echo">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow">See it live</p>
+            <h2>Don't Take Our Word For It. Watch Us Answer in Real Time.</h2>
+            <p class="section-subhead">Text our line right now from your phone. You'll get a real iMessage back in seconds — blue bubble, just like a real conversation. That's exactly what your leads will get.</p>
+          </div>
+
+          <div class="echo-demo-grid reveal">
+            <div class="echo-demo-phone">
+              <div class="phone-mockup">
+                <div class="phone-shell">
+                  <div class="phone-screen">
+                    <div class="phone-status-bar">
+                      <span>9:41</span>
+                      <span>▶ ●●●●</span>
+                    </div>
+                    <div class="phone-contact-bar">
+                      <div class="phone-avatar">🏠</div>
+                      <span class="phone-contact-name">Your Roofing Co.</span>
+                      <span class="phone-contact-sub">iMessage</span>
+                    </div>
+                    <div class="phone-messages">
+                      <div class="msg msg-in">Hi, do y'all do roof inspections after hail?</div>
+                      <div class="msg msg-out">We do! We can have an estimator out as early as tomorrow morning — does 9am or 1pm work better?</div>
+                      <div class="msg-read">✓✓ Read 9:41 AM</div>
+                      <div class="msg msg-in">¿Hablan español?</div>
+                      <div class="msg msg-out">¡Claro que sí! Podemos agendar su inspección gratis mañana — ¿le funciona a las 9am?</div>
+                      <div class="msg-time">Replied in 52 seconds</div>
+                    </div>
+                    <div class="phone-input-bar">
+                      <div class="phone-input-field"></div>
+                      <div class="phone-send-btn">↑</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="echo-demo-action">
+              <!--
+                ── DEMO MODE TOGGLE ──
+                Two modes, toggled by `DEMO_LINE_LIVE` in script.js (currently false = Mode B):
+                  Mode A [data-demo-mode="live"]     — live tap-to-text demo line (DEFERRED until SendBlue demo number funded)
+                  Mode B [data-demo-mode="fallback"] — lead-capture form, James texts back manually from Lone Star (ACTIVE)
+                To go live: set DEMO_LINE_LIVE = true in script.js AND swap the placeholder number below.
+              -->
+              <div data-demo-mode="live" hidden>
+                <!-- SWAP: real SendBlue demo number when funded (both the display text and the sms: href) -->
+                <a class="btn btn-primary btn-xl echo-demo-sms" href="sms:+10000000000?&body=DEMO">Text "DEMO" to (XXX) XXX-XXXX</a>
+                <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
+              </div>
+
+              <div data-demo-mode="fallback">
+                <form class="echo-demo-form" data-webhook="https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b">
+                  <!-- SWAP data-webhook above: GHL_WEBHOOK_URL_DEMO — dedicated WEBSITE sub-account webhook (James to provide once the
+                       website sub-account exists). Using the main FCS webhook as a TEMPORARY placeholder; the source field
+                       keeps these leads distinguishable in the meantime. -->
+                  <p class="echo-demo-form-title">Want a live demo? Drop your number 👇</p>
+                  <div class="echo-demo-form-row">
+                    <label class="sr-only" for="echo-demo-phone-home">Phone Number</label>
+                    <input type="tel" name="phone" id="echo-demo-phone-home" required autocomplete="tel" placeholder="(555) 555-5555">
+                    <button class="btn btn-primary" type="submit">Text Me a Live Demo</button>
+                  </div>
+
+                  <div class="consent-block">
+                    <label class="consent-option">
+                      <input type="checkbox" name="transactional_consent">
+                      <span>I consent to receive non-marketing text messages from Full Calendar Systems LLC about demo scheduling and appointment confirmations. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <label class="consent-option">
+                      <input type="checkbox" name="marketing_consent">
+                      <span>I consent to receive marketing text messages about special offers, service updates, and promotions from Full Calendar Systems LLC at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <p class="consent-disclaimer">Consent is not required to submit this form or receive our services.</p>
+                    <p class="consent-disclaimer">By submitting, you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>. Your phone number will only be used to contact you about your inquiry. We never sell or share phone numbers with third parties.</p>
+                    <div class="consent-links">
+                      <a href="privacy-policy.html">Privacy Policy</a>
+                      <a href="terms.html">Terms of Service</a>
+                    </div>
+                  </div>
+
+                  <div class="echo-demo-success" style="display:none;padding:1rem;background:#1a3a1a;border:1px solid #4caf50;border-radius:8px;color:#4caf50;margin-top:1rem;text-align:center;">
+                    📲 Got it — keep an eye on your texts.
+                  </div>
+                  <div class="echo-demo-error" style="display:none;padding:1rem;background:#3a1a1a;border:1px solid #e74c3c;border-radius:8px;color:#e74c3c;margin-top:1rem;text-align:center;">
+                    Something went wrong. Please email us at james@fullcalendarsystems.com
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section section-dark" id="lead-qualifier">
         <div class="container narrow">
           <div class="section-heading reveal">
@@ -513,6 +611,7 @@
           <a href="#how-it-works">How It Works</a>
           <a href="#what-you-get">What You Get</a>
           <a href="#pricing">Pricing</a>
+          <a href="roi-calculator.html">ROI Calculator</a>
           <a href="#faq">FAQ</a>
         </div>
         <div class="footer-links">

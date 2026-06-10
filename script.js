@@ -202,3 +202,56 @@ if (qualifierForm) {
   qualifierForm.setAttribute("action", qualifierForm.getAttribute("action") || "https://formspree.io/f/PLACEHOLDER");
   qualifierForm.setAttribute("method", qualifierForm.getAttribute("method") || "POST");
 }
+
+// ── Text Echo Live — demo mode toggle ──
+// Mode A [data-demo-mode="live"]     — tap-to-text demo line. DEFERRED until the SendBlue
+//                                      demo number is funded; the sms: href + display number
+//                                      are placeholders (search "SWAP" in the HTML).
+// Mode B [data-demo-mode="fallback"] — lead-capture form; James texts back manually. ACTIVE.
+// To flip to Mode A: set DEMO_LINE_LIVE = true here AND swap the placeholder number in the HTML.
+const DEMO_LINE_LIVE = false;
+
+document.querySelectorAll("[data-demo-mode]").forEach((block) => {
+  const isLive = block.dataset.demoMode === "live";
+  block.hidden = DEMO_LINE_LIVE ? !isLive : isLive;
+});
+
+// ── Text Echo Live — fallback demo-request form(s) ──
+// Webhook URL lives in each form's data-webhook attribute. Currently the main FCS webhook
+// as a TEMPORARY placeholder — swap to GHL_WEBHOOK_URL_DEMO (dedicated website sub-account
+// webhook) once James creates it. The source field keeps these leads distinguishable.
+document.querySelectorAll(".echo-demo-form").forEach((form) => {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const successEl = form.querySelector(".echo-demo-success");
+    const errorEl = form.querySelector(".echo-demo-error");
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+    if (successEl) successEl.style.display = "none";
+    if (errorEl) errorEl.style.display = "none";
+
+    const data = {
+      phone: form.querySelector('[name="phone"]').value,
+      transactional_consent: form.querySelector('[name="transactional_consent"]').checked,
+      marketing_consent: form.querySelector('[name="marketing_consent"]').checked,
+      source: "FCS Website — Text Echo Demo Request",
+    };
+
+    try {
+      await fetch(form.dataset.webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (successEl) successEl.style.display = "block";
+      form.reset();
+    } catch (err) {
+      if (errorEl) errorEl.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  });
+});

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free tool for roofing companies: answer 3 quick questions and see exactly how much revenue you're losing to slow lead follow-up.">
+  <title>How Much Revenue Are You Losing to Slow Follow-Up? | Full Calendar Systems</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="See Exactly How Much Revenue You're Losing to Slow Follow-Up">
+  <meta property="og:description" content="Free tool for roofing companies: answer 3 quick questions and we'll show you the number.">
+  <meta property="og:image" content="https://fullcalendarsystems.com/og-image.png">
+  <meta property="og:url" content="https://fullcalendarsystems.com/roi-calculator.html">
+  <meta property="og:site_name" content="Full Calendar Systems">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="See Exactly How Much Revenue You're Losing to Slow Follow-Up">
+  <meta name="twitter:description" content="Free tool for roofing companies: answer 3 quick questions and we'll show you the number.">
+  <meta name="twitter:image" content="https://fullcalendarsystems.com/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>document.documentElement.classList.add("js");</script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header" id="top">
+      <div class="container nav-bar">
+        <a class="brand" href="index.html" aria-label="Full Calendar Systems home">
+          <img src="FCS_Block_Dark.svg" alt="Full Calendar Systems" class="brand-mark">
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <nav class="site-nav" id="site-nav" data-site-nav>
+          <a href="index.html#how-it-works">How It Works</a>
+          <a href="index.html#what-you-get">What You Get</a>
+          <a href="index.html#pricing">Pricing</a>
+          <a href="roi-calculator.html" aria-current="page">ROI Calculator</a>
+          <a class="btn btn-primary nav-cta" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section-dark calc-hero">
+        <div class="container narrow">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Free Tool</p>
+            <h1>See Exactly How Much Revenue You're Losing to Slow Follow-Up</h1>
+            <p class="section-subhead">Most roofers are bleeding jobs they already paid for — and don't even know it. Answer 3 quick questions and we'll show you the number.</p>
+          </div>
+
+          <div class="calc-card reveal" id="calculator">
+
+            <!-- STEP 1 — the 3 inputs -->
+            <div class="calc-step" id="calc-step-inputs">
+              <div class="calc-field">
+                <div class="calc-field-head">
+                  <span class="calc-field-label">How many leads do you get per month?</span>
+                  <span class="calc-readout" id="calc-leads-readout">40</span>
+                </div>
+                <input type="range" class="calc-slider" id="calc-leads" min="5" max="300" step="5" value="40" aria-label="Leads per month">
+                <div class="calc-slider-scale" aria-hidden="true"><span>5</span><span>300</span></div>
+              </div>
+
+              <div class="calc-field">
+                <span class="calc-field-label">What's your average job value?</span>
+                <div class="chip-row" id="calc-value-chips" role="group" aria-label="Average job value">
+                  <button type="button" class="chip" data-value="5000">$5,000</button>
+                  <button type="button" class="chip selected" data-value="9000">$9,000</button>
+                  <button type="button" class="chip" data-value="15000">$15,000</button>
+                  <button type="button" class="chip" data-value="25000">$25,000</button>
+                </div>
+              </div>
+
+              <div class="calc-field">
+                <span class="calc-field-label">What's your current close rate on leads you reach?</span>
+                <div class="chip-row" id="calc-rate-chips" role="group" aria-label="Close rate">
+                  <button type="button" class="chip" data-value="0.10">10%</button>
+                  <button type="button" class="chip" data-value="0.20">20%</button>
+                  <button type="button" class="chip selected" data-value="0.30">30%</button>
+                  <button type="button" class="chip" data-value="0.40">40%</button>
+                  <button type="button" class="chip" data-value="0.50">50%</button>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-wide" type="button" id="calc-calculate-btn">Calculate My Lost Revenue</button>
+            </div>
+
+            <!-- STEP 2 — the gate (lead capture before reveal) -->
+            <form class="calc-step calc-gate" id="calc-step-gate" hidden>
+              <div class="calc-gate-head">
+                <p class="calc-gate-title">Your number is ready.</p>
+                <p class="calc-gate-sub">Tell us who to show it to:</p>
+              </div>
+              <div class="form-grid">
+                <label>
+                  <span>Your Name *</span>
+                  <input type="text" name="name" required autocomplete="name">
+                </label>
+                <label>
+                  <span>Business Name *</span>
+                  <input type="text" name="business" required autocomplete="organization">
+                </label>
+                <label>
+                  <span>Phone Number *</span>
+                  <input type="tel" name="phone" required autocomplete="tel">
+                </label>
+                <label>
+                  <span>City <small>(optional)</small></span>
+                  <input type="text" name="city" autocomplete="address-level2">
+                </label>
+              </div>
+
+              <div class="consent-block">
+                <label class="consent-option">
+                  <input type="checkbox" name="transactional_consent" id="calc_transactional_consent">
+                  <span>I consent to receive non-marketing text messages from Full Calendar Systems LLC about demo scheduling and appointment confirmations. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                </label>
+                <label class="consent-option">
+                  <input type="checkbox" name="marketing_consent" id="calc_marketing_consent">
+                  <span>I consent to receive marketing text messages about special offers, service updates, and promotions from Full Calendar Systems LLC at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                </label>
+                <p class="consent-disclaimer">Consent is not required to submit this form or receive our services.</p>
+                <p class="consent-disclaimer">By submitting, you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>. Your phone number will only be used to contact you about your inquiry. We never sell or share phone numbers with third parties.</p>
+                <div class="consent-links">
+                  <a href="privacy-policy.html">Privacy Policy</a>
+                  <a href="terms.html">Terms of Service</a>
+                </div>
+              </div>
+
+              <div id="calc-form-error" style="display:none;padding:1rem;background:#3a1a1a;border:1px solid #e74c3c;border-radius:8px;color:#e74c3c;margin-bottom:1rem;text-align:center;">
+                Something went wrong. Please email us at james@fullcalendarsystems.com
+              </div>
+
+              <button class="btn btn-primary btn-wide" type="submit" id="calc-show-btn">Show My Number</button>
+              <button class="calc-back-link" type="button" id="calc-back-btn">← Adjust my numbers</button>
+            </form>
+
+            <!-- STEP 3 — the reveal -->
+            <div class="calc-step calc-result" id="calc-step-result" hidden>
+              <p class="calc-result-label">You're leaving on the table every year:</p>
+              <p class="calc-big" id="calc-annual">$0</p>
+              <p class="calc-sub">That's <strong id="calc-monthly">$0/mo</strong> — <span id="calc-jobs">~0 jobs/month you could be closing</span></p>
+              <p class="calc-footnote">Based on industry data: ~35% of inbound leads never get a fast response, and roofers who respond within 5 minutes are up to 21× more likely to qualify the lead. We apply a conservative 50% recovery rate.</p>
+
+              <div class="calc-cta">
+                <p class="calc-cta-line">You don't need more leads. You need to stop losing the ones you've got.</p>
+                <div class="calc-cta-actions">
+                  <a class="btn btn-primary" href="https://api.leadconnectorhq.com/widget/booking/mLNB1w6cOmezTKSYCTDc">Book a Free Demo</a>
+                  <a class="btn btn-secondary" href="#text-echo">Text Echo Live →</a>
+                </div>
+                <div class="wedge-row" aria-label="What makes us different">
+                  <div class="wedge-card"><span aria-hidden="true">💬</span><span>We answer via iMessage (blue bubbles)</span></div>
+                  <div class="wedge-card"><span aria-hidden="true">⚡</span><span>60-second response, 24/7</span></div>
+                  <div class="wedge-card"><span aria-hidden="true">🗣️</span><span>Bilingual — English &amp; Spanish</span></div>
+                </div>
+                <button class="calc-back-link" type="button" id="calc-recalc-btn">↻ Recalculate with different numbers</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TEXT ECHO LIVE ── -->
+      <section class="section section-surface" id="text-echo">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow">See it live</p>
+            <h2>Don't Take Our Word For It. Watch Us Answer in Real Time.</h2>
+            <p class="section-subhead">Text our line right now from your phone. You'll get a real iMessage back in seconds — blue bubble, just like a real conversation. That's exactly what your leads will get.</p>
+          </div>
+
+          <div class="echo-demo-grid reveal">
+            <div class="echo-demo-phone">
+              <div class="phone-mockup">
+                <div class="phone-shell">
+                  <div class="phone-screen">
+                    <div class="phone-status-bar">
+                      <span>9:41</span>
+                      <span>▶ ●●●●</span>
+                    </div>
+                    <div class="phone-contact-bar">
+                      <div class="phone-avatar">🏠</div>
+                      <span class="phone-contact-name">Your Roofing Co.</span>
+                      <span class="phone-contact-sub">iMessage</span>
+                    </div>
+                    <div class="phone-messages">
+                      <div class="msg msg-in">Hi, do y'all do roof inspections after hail?</div>
+                      <div class="msg msg-out">We do! We can have an estimator out as early as tomorrow morning — does 9am or 1pm work better?</div>
+                      <div class="msg-read">✓✓ Read 9:41 AM</div>
+                      <div class="msg msg-in">¿Hablan español?</div>
+                      <div class="msg msg-out">¡Claro que sí! Podemos agendar su inspección gratis mañana — ¿le funciona a las 9am?</div>
+                      <div class="msg-time">Replied in 52 seconds</div>
+                    </div>
+                    <div class="phone-input-bar">
+                      <div class="phone-input-field"></div>
+                      <div class="phone-send-btn">↑</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="echo-demo-action">
+              <!--
+                ── DEMO MODE TOGGLE ──
+                Two modes, toggled by `DEMO_LINE_LIVE` in script.js (currently false = Mode B):
+                  Mode A [data-demo-mode="live"]     — live tap-to-text demo line (DEFERRED until SendBlue demo number funded)
+                  Mode B [data-demo-mode="fallback"] — lead-capture form, James texts back manually from Lone Star (ACTIVE)
+                To go live: set DEMO_LINE_LIVE = true in script.js AND swap the placeholder number below.
+              -->
+              <div data-demo-mode="live" hidden>
+                <!-- SWAP: real SendBlue demo number when funded (both the display text and the sms: href) -->
+                <a class="btn btn-primary btn-xl echo-demo-sms" href="sms:+10000000000?&body=DEMO">Text "DEMO" to (XXX) XXX-XXXX</a>
+                <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
+              </div>
+
+              <div data-demo-mode="fallback">
+                <form class="echo-demo-form" data-webhook="https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b">
+                  <!-- SWAP data-webhook above: GHL_WEBHOOK_URL_DEMO — dedicated WEBSITE sub-account webhook (James to provide once the
+                       website sub-account exists). Using the main FCS webhook as a TEMPORARY placeholder; the source field below
+                       keeps these leads distinguishable in the meantime. -->
+                  <p class="echo-demo-form-title">Want a live demo? Drop your number 👇</p>
+                  <div class="echo-demo-form-row">
+                    <label class="sr-only" for="echo-demo-phone-calc">Phone Number</label>
+                    <input type="tel" name="phone" id="echo-demo-phone-calc" required autocomplete="tel" placeholder="(555) 555-5555">
+                    <button class="btn btn-primary" type="submit">Text Me a Live Demo</button>
+                  </div>
+
+                  <div class="consent-block">
+                    <label class="consent-option">
+                      <input type="checkbox" name="transactional_consent">
+                      <span>I consent to receive non-marketing text messages from Full Calendar Systems LLC about demo scheduling and appointment confirmations. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <label class="consent-option">
+                      <input type="checkbox" name="marketing_consent">
+                      <span>I consent to receive marketing text messages about special offers, service updates, and promotions from Full Calendar Systems LLC at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <p class="consent-disclaimer">Consent is not required to submit this form or receive our services.</p>
+                    <p class="consent-disclaimer">By submitting, you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>. Your phone number will only be used to contact you about your inquiry. We never sell or share phone numbers with third parties.</p>
+                    <div class="consent-links">
+                      <a href="privacy-policy.html">Privacy Policy</a>
+                      <a href="terms.html">Terms of Service</a>
+                    </div>
+                  </div>
+
+                  <div class="echo-demo-success" style="display:none;padding:1rem;background:#1a3a1a;border:1px solid #4caf50;border-radius:8px;color:#4caf50;margin-top:1rem;text-align:center;">
+                    📲 Got it — keep an eye on your texts.
+                  </div>
+                  <div class="echo-demo-error" style="display:none;padding:1rem;background:#3a1a1a;border:1px solid #e74c3c;border-radius:8px;color:#e74c3c;margin-top:1rem;text-align:center;">
+                    Something went wrong. Please email us at james@fullcalendarsystems.com
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <img src="FCS_Block_Dark.svg" alt="Full Calendar Systems" class="brand-mark">
+          <p>We answer. You close.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html#how-it-works">How It Works</a>
+          <a href="index.html#what-you-get">What You Get</a>
+          <a href="index.html#pricing">Pricing</a>
+          <a href="roi-calculator.html">ROI Calculator</a>
+        </div>
+        <div class="footer-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+        <div class="footer-meta">
+          <p>© 2026 Full Calendar Systems LLC. All rights reserved.</p>
+          <p>1301 Parker Ln, #339, Austin, TX 78741</p>
+          <a href="tel:+17374272221">+1 (737) 427-2221</a>
+          <a href="mailto:james@fullcalendarsystems.com">james@fullcalendarsystems.com</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // ── GHL WEBHOOK — calculator leads → FCS PRODUCTION sub-account (naMSy7VSuk58oQgeKxPy) ──
+    // <JAMES TO PROVIDE — dedicated calculator→Echo webhook>
+    // TODO(James): replace with the DEDICATED inbound webhook URL (new FCS workflow that fires Echo).
+    // Until then this uses the existing FCS qualification-form webhook as a TEMPORARY placeholder so no lead is dropped;
+    // the `source` field keeps calculator leads distinguishable.
+    // James also creates these GHL CUSTOM FIELDS on the FCS sub-account so Echo can open with them in conversation:
+    //   calc_leads_per_month, calc_avg_job_value, calc_close_rate, calc_monthly_revenue_lost, calc_annual_revenue_lost
+    const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/a24af0a6-f222-43e5-bbc9-b487e32fba7b';
+
+    // ── THE MATH (locked — see brief) ──
+    // 35% of inbound leads are effectively lost to slow/no follow-up; ~half are recoverable
+    // with a 60-second response (conservative). Defaults verify: 40 × 0.35 × 0.50 × 0.30 × $9,000
+    // = $18,900/mo → $226,800/yr.
+    const MISSED_RATE = 0.35;
+    const SPEED_RECOVERY = 0.50;
+
+    const fmtUSD = (n) => '$' + Math.round(n).toLocaleString('en-US');
+
+    const leadsSlider = document.getElementById('calc-leads');
+    const leadsReadout = document.getElementById('calc-leads-readout');
+    const stepInputs = document.getElementById('calc-step-inputs');
+    const stepGate = document.getElementById('calc-step-gate');
+    const stepResult = document.getElementById('calc-step-result');
+
+    let jobValue = 9000;
+    let closeRate = 0.30;
+    let captured = false;
+
+    function paintSlider() {
+      const pct = ((leadsSlider.value - leadsSlider.min) / (leadsSlider.max - leadsSlider.min)) * 100;
+      leadsSlider.style.background =
+        'linear-gradient(90deg, #e87722 0%, #e87722 ' + pct + '%, rgba(148,163,184,0.25) ' + pct + '%, rgba(148,163,184,0.25) 100%)';
+      leadsReadout.textContent = leadsSlider.value;
+    }
+    leadsSlider.addEventListener('input', paintSlider);
+    paintSlider();
+
+    function wireChips(rowId, onPick) {
+      const row = document.getElementById(rowId);
+      row.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        row.querySelectorAll('.chip').forEach((c) => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        onPick(parseFloat(chip.dataset.value));
+      });
+    }
+    wireChips('calc-value-chips', (v) => { jobValue = v; });
+    wireChips('calc-rate-chips', (v) => { closeRate = v; });
+
+    function compute() {
+      const leads = parseInt(leadsSlider.value, 10);
+      const leadsLost = leads * MISSED_RATE;
+      const recoverableLeads = leadsLost * SPEED_RECOVERY;
+      const recoverableJobs = recoverableLeads * closeRate;
+      const monthly = recoverableJobs * jobValue;
+      return {
+        leads,
+        recoverableJobs,
+        monthly,
+        annual: monthly * 12
+      };
+    }
+
+    function showStep(step) {
+      [stepInputs, stepGate, stepResult].forEach((el) => { el.hidden = el !== step; });
+    }
+
+    function countUp(el, target, duration) {
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = fmtUSD(target * eased) + '/yr';
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function revealResult() {
+      const r = compute();
+      document.getElementById('calc-monthly').textContent = fmtUSD(r.monthly) + '/mo';
+      document.getElementById('calc-jobs').textContent =
+        '~' + Math.max(1, Math.round(r.recoverableJobs)) + ' jobs/month you could be closing';
+      showStep(stepResult);
+      countUp(document.getElementById('calc-annual'), r.annual, 1400);
+      stepResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.getElementById('calc-calculate-btn').addEventListener('click', () => {
+      if (captured) {
+        revealResult();
+      } else {
+        showStep(stepGate);
+      }
+    });
+
+    document.getElementById('calc-back-btn').addEventListener('click', () => showStep(stepInputs));
+    document.getElementById('calc-recalc-btn').addEventListener('click', () => showStep(stepInputs));
+
+    stepGate.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = document.getElementById('calc-show-btn');
+      const errorEl = document.getElementById('calc-form-error');
+      btn.disabled = true;
+      btn.textContent = 'One sec...';
+      errorEl.style.display = 'none';
+
+      const r = compute();
+      const formData = new FormData(this);
+      const data = {
+        name: formData.get('name'),
+        business: formData.get('business'),
+        phone: formData.get('phone'),
+        city: formData.get('city') || '',
+        // Formatted so Echo can drop them straight into conversation from GHL custom fields
+        calc_leads_per_month: String(r.leads),
+        calc_avg_job_value: fmtUSD(jobValue),
+        calc_close_rate: Math.round(closeRate * 100) + '%',
+        calc_monthly_revenue_lost: fmtUSD(r.monthly),
+        calc_annual_revenue_lost: fmtUSD(r.annual),
+        transactional_consent: document.getElementById('calc_transactional_consent').checked,
+        marketing_consent: document.getElementById('calc_marketing_consent').checked,
+        source: 'FCS Website — ROI Calculator'
+      };
+
+      try {
+        await fetch(GHL_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        captured = true;
+        revealResult();
+      } catch (err) {
+        errorEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Show My Number';
+      }
+    });
+  </script>
+</body>
+</html>
