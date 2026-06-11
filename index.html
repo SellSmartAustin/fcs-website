@@ -384,9 +384,23 @@
                 To go live: set DEMO_LINE_LIVE = true in script.js AND swap the placeholder number below.
               -->
               <div data-demo-mode="live" hidden>
-                <!-- Live demo line: Linq iMessage 512-373-9490 ("Lone Star Roofing"). Pre-filled body
-                     drops the visitor straight into the homeowner role-play the demo brain expects. -->
-                <a class="btn btn-primary btn-xl echo-demo-sms" href="sms:+15123739490?&body=Hey%20%E2%80%94%20can%20you%20help%20me%20with%20my%20roof%3F">Text our live demo: (512) 373-9490</a>
+                <!-- Live demo line: Linq iMessage 512-373-9490 ("Lone Star Roofing" — our fictional demo
+                     company). The visitor plays a homeowner; Echo plays the roofing company, then reveals.
+                     Each chip opens Messages with the number + opener pre-filled — one tap to send. -->
+                <p class="echo-demo-roleplay-intro">You're the homeowner. Echo's the roofing company. Pick an opener (or write your own) and watch how fast your leads would be answered:</p>
+                <div class="echo-demo-chips">
+                  <a class="echo-demo-chip" href="sms:+15123739490?&body=Hey%2C%20I%20think%20I%20just%20got%20hail%20damage">🌩️ "Hey, I think I just got hail damage"</a>
+                  <a class="echo-demo-chip" href="sms:+15123739490?&body=I%20have%20a%20leak%20in%20my%20roof">💧 "I have a leak in my roof"</a>
+                  <a class="echo-demo-chip" href="sms:+15123739490?&body=How%20much%20does%20a%20full%20replacement%20cost%3F">💰 "How much does a full replacement cost?"</a>
+                  <a class="echo-demo-chip" href="sms:+15123739490?&body=Hola%2C%20creo%20que%20tengo%20da%C3%B1o%20de%20granizo%20en%20mi%20techo">🇲🇽 "Hola, creo que tengo daño de granizo"</a>
+                </div>
+                <div class="echo-demo-number-row">
+                  <span class="echo-demo-number">Or text us directly: <a href="sms:+15123739490">(512) 373-9490</a></span>
+                  <details class="echo-demo-qr">
+                    <summary>On a computer? Scan to text 📱</summary>
+                    <img src="qr-demo-line.svg" alt="QR code — scan with your phone to text the live demo line" width="140" height="140" loading="lazy">
+                  </details>
+                </div>
                 <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
               </div>
 

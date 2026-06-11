@@ -1972,6 +1972,67 @@ h1 {
   width: 100%;
 }
 
+/* ── Live demo line: role-play opener chips + number + optional QR ── */
+.echo-demo-roleplay-intro {
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.echo-demo-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.echo-demo-chip {
+  display: block;
+  padding: 12px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.echo-demo-chip:hover {
+  background: #fdf1e7;
+  transform: translateY(-1px);
+}
+
+.echo-demo-number-row {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.echo-demo-number {
+  font-weight: 600;
+}
+
+.echo-demo-number a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.echo-demo-qr summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.echo-demo-qr[open] img {
+  display: block;
+  margin-top: 10px;
+  border: 1px solid #e5e0da;
+  border-radius: 12px;
+  padding: 8px;
+  background: #fff;
+}
+
 .echo-demo-note {
   margin: 14px 0 0;
   color: var(--muted);
