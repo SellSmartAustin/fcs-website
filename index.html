@@ -379,13 +379,14 @@
               <!--
                 ── DEMO MODE TOGGLE ──
                 Two modes, toggled by `DEMO_LINE_LIVE` in script.js (currently false = Mode B):
-                  Mode A [data-demo-mode="live"]     — live tap-to-text demo line (DEFERRED until SendBlue demo number funded)
+                  Mode A [data-demo-mode="live"]     — live tap-to-text demo line (Linq 512-373-9490, "Lone Star Roofing" display)
                   Mode B [data-demo-mode="fallback"] — lead-capture form, James texts back manually from Lone Star (ACTIVE)
                 To go live: set DEMO_LINE_LIVE = true in script.js AND swap the placeholder number below.
               -->
               <div data-demo-mode="live" hidden>
-                <!-- SWAP: real SendBlue demo number when funded (both the display text and the sms: href) -->
-                <a class="btn btn-primary btn-xl echo-demo-sms" href="sms:+10000000000?&body=DEMO">Text "DEMO" to (XXX) XXX-XXXX</a>
+                <!-- Live demo line: Linq iMessage 512-373-9490 ("Lone Star Roofing"). Pre-filled body
+                     drops the visitor straight into the homeowner role-play the demo brain expects. -->
+                <a class="btn btn-primary btn-xl echo-demo-sms" href="sms:+15123739490?&body=Hey%20%E2%80%94%20can%20you%20help%20me%20with%20my%20roof%3F">Text our live demo: (512) 373-9490</a>
                 <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
               </div>
 

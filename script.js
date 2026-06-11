@@ -254,11 +254,11 @@ document.querySelectorAll("[data-phone-format]").forEach((input) => {
 });
 
 // ── Text Echo Live — demo mode toggle ──
-// Mode A [data-demo-mode="live"]     — tap-to-text demo line. DEFERRED until the SendBlue
-//                                      demo number is funded; the sms: href + display number
-//                                      are placeholders (search "SWAP" in the HTML).
+// Mode A [data-demo-mode="live"]     — tap-to-text demo line (Linq 512-373-9490, real number
+//                                      already in the HTML). STAGED — flip after the E2E test
+//                                      of the website-demo Echo tenant passes.
 // Mode B [data-demo-mode="fallback"] — lead-capture form; James texts back manually. ACTIVE.
-// To flip to Mode A: set DEMO_LINE_LIVE = true here AND swap the placeholder number in the HTML.
+// To flip to Mode A: set DEMO_LINE_LIVE = true (number is already swapped in).
 const DEMO_LINE_LIVE = false;
 
 document.querySelectorAll("[data-demo-mode]").forEach((block) => {
