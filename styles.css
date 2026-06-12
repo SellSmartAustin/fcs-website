@@ -176,6 +176,112 @@ button {
   background: linear-gradient(180deg, rgba(18, 29, 41, 0.9), rgba(15, 25, 35, 0.96));
 }
 
+/* ── Light bands: tonal rhythm against the dark sections ── */
+.section-light {
+  background: linear-gradient(180deg, #f7f4ef 0%, #f1ece4 100%);
+  color: #16202c;
+}
+
+.section-light h2,
+.section-light h3 {
+  color: #16202c;
+}
+
+.section-light .section-subhead {
+  color: rgba(22, 32, 44, 0.72);
+}
+
+.section-light .faq-item {
+  background: #ffffff;
+  border-color: rgba(22, 32, 44, 0.1);
+  box-shadow: 0 12px 28px rgba(22, 32, 44, 0.08);
+}
+
+.section-light .faq-trigger {
+  color: #16202c;
+}
+
+.section-light .faq-panel p {
+  color: rgba(22, 32, 44, 0.78);
+}
+
+/* ── Day Without / Day With ── */
+.day-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.day-col {
+  border-radius: var(--radius-lg);
+  padding: 30px;
+}
+
+.day-without {
+  background: #ffffff;
+  border: 1px solid rgba(198, 40, 40, 0.2);
+  box-shadow: 0 12px 28px rgba(22, 32, 44, 0.07);
+}
+
+.day-with {
+  background: linear-gradient(180deg, #16202c, #1b2838);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: 0 18px 40px rgba(22, 32, 44, 0.22);
+}
+
+.day-col h3 {
+  font-family: "Barlow", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 18px;
+}
+
+.day-without h3 {
+  color: #c62828;
+}
+
+.day-with h3,
+.section-light .day-with h3 {
+  color: #22c55e;
+}
+
+.section-light .day-with li {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.day-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 13px;
+}
+
+.day-col li {
+  padding-left: 28px;
+  position: relative;
+  line-height: 1.55;
+}
+
+.day-col li::before {
+  position: absolute;
+  left: 0;
+  font-weight: 800;
+}
+
+.day-without li::before {
+  content: "✗";
+  color: #c62828;
+}
+
+.day-with li::before {
+  content: "✓";
+  color: #22c55e;
+}
+
 .hero {
   padding: 56px 0 88px;
 }
@@ -847,6 +953,7 @@ h1 {
 
 /* ── Four named tools (What You Get) ── */
 .tools-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-bottom: 18px;
 }
 
@@ -938,6 +1045,7 @@ h1 {
 
 .steps {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -1217,10 +1325,10 @@ h1 {
 }
 
 .consent-block {
-  margin: 22px 0 24px;
-  padding: 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  margin: 18px 0 20px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
   background: rgba(15, 25, 35, 0.32);
 }
 
@@ -1229,8 +1337,9 @@ h1 {
   flex-direction: row;
   gap: 10px;
   align-items: flex-start;
-  color: rgba(148, 163, 184, 0.98);
-  font-size: 0.85rem;
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.72rem;
+  line-height: 1.5;
   line-height: 1.7;
 }
 
@@ -1301,9 +1410,9 @@ h1 {
 
 .consent-notice,
 .consent-disclaimer {
-  margin: 14px 0 0;
-  font-size: 0.82rem;
-  color: var(--muted);
+  margin: 10px 0 0;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.75);
   text-align: center;
   font-style: italic;
 }
@@ -1605,6 +1714,9 @@ h1 {
   .problem-grid,
   .stats-row,
   .benefits-grid,
+  .tools-grid,
+  .steps,
+  .day-compare-grid,
   .form-grid,
   .imessage-diff-grid {
     grid-template-columns: 1fr;
