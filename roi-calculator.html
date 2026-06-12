@@ -77,24 +77,21 @@
               </div>
 
               <div class="calc-field">
-                <span class="calc-field-label" id="calc-value-label">What's your average job value?</span>
-                <div class="chip-row" id="calc-value-chips" role="radiogroup" aria-labelledby="calc-value-label">
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="5000">$5,000</button>
-                  <button type="button" class="chip selected" role="radio" aria-checked="true" data-value="9000">$9,000</button>
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="15000">$15,000</button>
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="25000">$25,000</button>
+                <div class="calc-field-head">
+                  <label class="calc-field-label" for="calc-value-readout">What's your average job value? <small>($)</small></label>
+                  <input type="number" class="calc-readout-input" id="calc-value-readout" min="3000" max="50000" step="500" value="9000" inputmode="numeric" aria-label="Average job value in dollars">
                 </div>
+                <input type="range" class="calc-slider" id="calc-value" min="3000" max="50000" step="500" value="9000" aria-label="Average job value slider">
+                <div class="calc-slider-scale" aria-hidden="true"><span>$3,000</span><span>$50,000</span></div>
               </div>
 
               <div class="calc-field">
-                <span class="calc-field-label" id="calc-rate-label">What's your current close rate on leads you reach?</span>
-                <div class="chip-row" id="calc-rate-chips" role="radiogroup" aria-labelledby="calc-rate-label">
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.10">10%</button>
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.20">20%</button>
-                  <button type="button" class="chip selected" role="radio" aria-checked="true" data-value="0.30">30%</button>
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.40">40%</button>
-                  <button type="button" class="chip" role="radio" aria-checked="false" data-value="0.50">50%</button>
+                <div class="calc-field-head">
+                  <label class="calc-field-label" for="calc-rate-readout">What's your close rate on leads you reach? <small>(%)</small></label>
+                  <input type="number" class="calc-readout-input" id="calc-rate-readout" min="5" max="90" step="5" value="30" inputmode="numeric" aria-label="Close rate percentage">
                 </div>
+                <input type="range" class="calc-slider" id="calc-rate" min="5" max="90" step="5" value="30" aria-label="Close rate slider">
+                <div class="calc-slider-scale" aria-hidden="true"><span>5%</span><span>90%</span></div>
               </div>
 
               <button class="btn btn-primary btn-wide" type="button" id="calc-calculate-btn">Calculate My Lost Revenue</button>
@@ -375,8 +372,13 @@
     const stepGate = document.getElementById('calc-step-gate');
     const stepResult = document.getElementById('calc-step-result');
 
+    const valueSlider = document.getElementById('calc-value');
+    const valueReadout = document.getElementById('calc-value-readout');
+    const rateSlider = document.getElementById('calc-rate');
+    const rateReadout = document.getElementById('calc-rate-readout');
+
     let jobValue = 9000;
-    let closeRate = 0.30;
+    let closeRate = 0.30; // stored as a decimal — the webhook payload depends on this shape
     let captured = false;
     let started = false;
     let submitting = false;
@@ -387,8 +389,14 @@
       const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
       if (saved) {
         if (saved.leads >= 5 && saved.leads <= 300) leadsSlider.value = saved.leads;
-        if ([5000, 9000, 15000, 25000].includes(saved.jobValue)) jobValue = saved.jobValue;
-        if ([0.10, 0.20, 0.30, 0.40, 0.50].includes(saved.closeRate)) closeRate = saved.closeRate;
+        if (saved.jobValue >= 3000 && saved.jobValue <= 50000) {
+          jobValue = saved.jobValue;
+          valueSlider.value = jobValue;
+        }
+        if (saved.closeRate >= 0.05 && saved.closeRate <= 0.90) {
+          closeRate = saved.closeRate;
+          rateSlider.value = Math.round(closeRate * 100);
+        }
         captured = saved.captured === true;
       }
     } catch (_) { /* corrupted state — fall through to defaults */ }
@@ -407,76 +415,45 @@
       track('roi_calc_started');
     }
 
-    // ── slider ⇄ editable readout ──
-    function paintSlider() {
-      const pct = ((leadsSlider.value - leadsSlider.min) / (leadsSlider.max - leadsSlider.min)) * 100;
-      leadsSlider.style.background =
-        'linear-gradient(90deg, #e87722 0%, #e87722 ' + pct + '%, rgba(148,163,184,0.25) ' + pct + '%, rgba(148,163,184,0.25) 100%)';
-    }
-    leadsSlider.addEventListener('input', () => {
-      leadsReadout.value = leadsSlider.value;
-      paintSlider();
-      markStarted();
-    });
-    leadsReadout.addEventListener('input', () => {
-      const v = parseInt(leadsReadout.value, 10);
-      if (!isNaN(v)) {
-        leadsSlider.value = Math.min(300, Math.max(5, v));
-        paintSlider();
+    // ── slider ⇄ editable readout (one pattern for all three inputs) ──
+    function wireSliderReadout(slider, readout, onChange) {
+      const min = parseFloat(slider.min);
+      const max = parseFloat(slider.max);
+
+      function paint() {
+        const pct = ((slider.value - min) / (max - min)) * 100;
+        slider.style.background =
+          'linear-gradient(90deg, #e87722 0%, #e87722 ' + pct + '%, rgba(148,163,184,0.25) ' + pct + '%, rgba(148,163,184,0.25) 100%)';
       }
-      markStarted();
-    });
-    leadsReadout.addEventListener('blur', () => {
-      const v = parseInt(leadsReadout.value, 10);
-      leadsReadout.value = isNaN(v) ? leadsSlider.value : Math.min(300, Math.max(5, v));
-      leadsSlider.value = leadsReadout.value;
-      paintSlider();
-    });
-    leadsReadout.value = leadsSlider.value;
-    paintSlider();
-
-    // ── chips as keyboard-navigable radio groups ──
-    function wireChips(rowId, initial, onPick) {
-      const row = document.getElementById(rowId);
-      const chips = Array.from(row.querySelectorAll('.chip'));
-
-      function select(chip) {
-        chips.forEach((c) => {
-          const on = c === chip;
-          c.classList.toggle('selected', on);
-          c.setAttribute('aria-checked', String(on));
-          c.tabIndex = on ? 0 : -1;
-        });
-        onPick(parseFloat(chip.dataset.value));
+      function apply(v) {
+        onChange(parseFloat(slider.value));
+        paint();
         markStarted();
       }
-
-      // roving tabindex starting point
-      chips.forEach((c) => { c.tabIndex = parseFloat(c.dataset.value) === initial ? 0 : -1; });
-
-      row.addEventListener('click', (e) => {
-        const chip = e.target.closest('.chip');
-        if (chip) select(chip);
+      slider.addEventListener('input', () => {
+        readout.value = slider.value;
+        apply();
       });
-      row.addEventListener('keydown', (e) => {
-        const idx = chips.indexOf(document.activeElement);
-        if (idx === -1) return;
-        let next = null;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = chips[(idx + 1) % chips.length];
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = chips[(idx - 1 + chips.length) % chips.length];
-        if (next) {
-          e.preventDefault();
-          next.focus();
-          select(next);
+      readout.addEventListener('input', () => {
+        const v = parseFloat(readout.value);
+        if (!isNaN(v)) {
+          slider.value = Math.min(max, Math.max(min, v));
+          apply();
         }
       });
-
-      // restore persisted selection
-      const match = chips.find((c) => parseFloat(c.dataset.value) === initial);
-      if (match && !match.classList.contains('selected')) select(match);
+      readout.addEventListener('blur', () => {
+        const v = parseFloat(readout.value);
+        readout.value = isNaN(v) ? slider.value : Math.min(max, Math.max(min, v));
+        slider.value = readout.value;
+        apply();
+      });
+      readout.value = slider.value;
+      paint();
     }
-    wireChips('calc-value-chips', jobValue, (v) => { jobValue = v; });
-    wireChips('calc-rate-chips', closeRate, (v) => { closeRate = v; });
+
+    wireSliderReadout(leadsSlider, leadsReadout, () => {});
+    wireSliderReadout(valueSlider, valueReadout, (v) => { jobValue = v; });
+    wireSliderReadout(rateSlider, rateReadout, (v) => { closeRate = v / 100; });
 
     function compute() {
       const leads = parseInt(leadsSlider.value, 10);
