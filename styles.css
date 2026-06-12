@@ -725,7 +725,25 @@ h1 {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
+}
+
+/* Quiet third action under the two main CTAs (replaced the third pill button +
+   trust chips — James 2026-06-12: less is more). */
+.hero-calc-link {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+  font-size: 0.96rem;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(232, 119, 34, 0.5);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.hero-calc-link:hover,
+.hero-calc-link:focus-visible {
+  color: var(--white);
+  border-color: var(--accent);
 }
 
 .btn {
@@ -933,6 +951,66 @@ h1 {
   min-width: 220px;
 }
 
+/* ── Problem section, editorial style (James 2026-06-12: tiles read gimmicky —
+   no boxes; numbered items over thin rules; stats as a clean divider strip) ── */
+.problem-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 38px 56px;
+  margin-top: 8px;
+}
+
+.problem-item {
+  border-top: 1px solid rgba(232, 119, 34, 0.4);
+  padding-top: 18px;
+}
+
+.problem-num {
+  display: block;
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.problem-item h3 {
+  font-size: 1.3rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.problem-item p {
+  color: rgba(148, 163, 184, 0.96);
+  margin: 0;
+}
+
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+  margin-top: 52px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.stat-item strong {
+  display: block;
+  color: #ffb062;
+  font-family: "Barlow", sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.1rem);
+  line-height: 0.95;
+  margin-bottom: 8px;
+}
+
+.stat-item span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
 .feature-card,
 .benefit-card,
 .step-card,
@@ -1117,7 +1195,7 @@ h1 {
 
 .price-was {
   font-size: 1.1rem;
-  color: rgba(148, 163, 184, 0.6);
+  color: rgba(186, 199, 214, 0.85);
   text-decoration: line-through;
   text-decoration-color: rgba(232, 119, 34, 0.5);
   font-family: "Barlow", sans-serif;
@@ -1137,11 +1215,22 @@ h1 {
     linear-gradient(180deg, rgba(30, 41, 59, 0.98), rgba(23, 33, 49, 0.98));
 }
 
-.pricing-card h3 {
+/* The pricing card stays DARK inside the light band, so every text color is set
+   explicitly here — .section-light's dark heading color must never reach it
+   (James 2026-06-12: the price is white, period). */
+.pricing-card h3,
+.section-light .pricing-card h3 {
   margin: 18px 0 8px;
   font-size: clamp(3rem, 6vw, 4.8rem);
   line-height: 0.92;
   letter-spacing: -0.04em;
+  color: var(--white);
+}
+
+.pricing-card .badge {
+  color: #ffb062;
+  background: rgba(232, 119, 34, 0.14);
+  border: 1px solid rgba(232, 119, 34, 0.35);
 }
 
 .pricing-card h3 span {
@@ -1163,9 +1252,14 @@ h1 {
   padding: 12px 16px;
   border: 1px solid rgba(34, 197, 94, 0.45);
   border-radius: 12px;
-  background: rgba(34, 197, 94, 0.08);
+  background: rgba(34, 197, 94, 0.1);
   font-size: 1rem;
   line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.pricing-guarantee strong {
+  color: #4ade80;
 }
 
 .checklist {
@@ -1713,6 +1807,8 @@ h1 {
 
   .problem-grid,
   .stats-row,
+  .problem-list,
+  .stats-strip,
   .benefits-grid,
   .tools-grid,
   .steps,
@@ -1720,6 +1816,15 @@ h1 {
   .form-grid,
   .imessage-diff-grid {
     grid-template-columns: 1fr;
+  }
+
+  .problem-list {
+    gap: 28px;
+  }
+
+  .stats-strip {
+    gap: 24px;
+    margin-top: 40px;
   }
 
   .imessage-stat-row {
