@@ -257,9 +257,9 @@ document.querySelectorAll("[data-phone-format]").forEach((input) => {
 // Mode A [data-demo-mode="live"]     — tap-to-text demo line (Linq 512-373-9490, real number
 //                                      already in the HTML). STAGED — flip after the E2E test
 //                                      of the website-demo Echo tenant passes.
-// Mode B [data-demo-mode="fallback"] — lead-capture form; James texts back manually. ACTIVE.
-// To flip to Mode A: set DEMO_LINE_LIVE = true (number is already swapped in).
-const DEMO_LINE_LIVE = false;
+// Mode B [data-demo-mode="fallback"] — lead-capture form; James texts back manually.
+// LIVE 2026-06-13: flipped to Mode A after full E2E (incl. Spanish) of the website-demo Echo tenant passed.
+const DEMO_LINE_LIVE = true;
 
 document.querySelectorAll("[data-demo-mode]").forEach((block) => {
   const isLive = block.dataset.demoMode === "live";
