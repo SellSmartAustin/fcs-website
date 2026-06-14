@@ -2244,9 +2244,9 @@ h1 {
   padding: 12px 16px;
   border: 2px solid var(--accent);
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  color: inherit;
+  color: #16202c;
   background: #fff;
   transition: background 0.15s ease, transform 0.15s ease;
 }
