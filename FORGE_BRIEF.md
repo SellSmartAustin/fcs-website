@@ -196,7 +196,7 @@ Update the h3 text on the 5 problem cards only. Do NOT change icons, paragraph t
 | Old h3 | New h3 |
 |--------|--------|
 | "The average roofer takes 8+ hours to respond to a new lead" | "The Ghosting Tax" |
-| "40% of leads go to the first contractor to respond - not the best one" | "Speed Wins the Job" |
+| "Most leads go to the first contractor to respond - not the best one" | "Speed Wins the Job" |
 | "Most roofers follow up once or twice, then move on" | "The 2-Call Dropout" |
 | "Green bubbles feel like spam. Blue bubbles feel like people." | "Green Bubbles Get Ignored" |
 | "Most homeowners need 2–3 follow-ups after a quote before they say yes" | "Lost Estimate Leakage" |

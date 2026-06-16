@@ -70,7 +70,7 @@ Build a single-page marketing website for Full Calendar Systems (FCS), a done-fo
 - **Subheadline:** "You're spending money on ads and referrals. But if nobody follows up fast enough — that lead is gone."
 - 3 pain point cards (dark surface `#1E293B`, amber accent left border):
   1. 🕐 **"The average roofer takes 8+ hours to respond to a new lead"** — By then, the homeowner already hired someone else.
-  2. 📵 **"40% of leads go to the first contractor to respond — not the best one"** — Speed wins the job. Not reputation. Not price. Speed.
+  2. 📵 **"Most leads go to the first contractor to respond — not the best one"** — Speed wins the job. Not reputation. Not price. Speed.
   3. 🔁 **"Most roofers follow up once or twice, then move on"** — Studies show it takes 8+ touchpoints to book a job. Who has time for that?
 - Stats row below cards (big amber numbers):
   - **9x** more likely to close if you respond in 5 min vs. 30 min
