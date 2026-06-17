@@ -208,7 +208,8 @@ if (qualifierForm) {
 // Events flow into window.dataLayer (GA4/GTM-ready) and window.plausible if either ever
 // loads, so the provider snippet is a drop-in with zero rework. Events fired today:
 //   roi_calc_started, roi_calculate_clicked, roi_gate_viewed, roi_lead_submitted,
-//   roi_result_revealed, roi_book_demo_clicked, roi_text_echo_clicked, echo_demo_request_submitted
+//   roi_result_revealed, roi_book_demo_clicked, roi_text_echo_clicked, echo_demo_request_submitted,
+//   echo_demo_unlocked
 window.fcsTrack = function (event, props) {
   try {
     (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: event }, props || {}));
@@ -341,12 +342,39 @@ document.querySelectorAll("[data-demo-mode]").forEach((block) => {
   });
 })();
 
-// ── Text Echo Live — fallback demo-request form(s) ──
-// Webhook URL lives in each form's data-webhook attribute. Currently the main FCS webhook
-// as a TEMPORARY placeholder — swap to GHL_WEBHOOK_URL_DEMO (dedicated website sub-account
-// webhook) once James creates it. The source field keeps these leads distinguishable.
+// ── Text Echo Live — demo forms (gate + fallback) ──
+// Webhook URL lives in each form's data-webhook attribute. These leads post to the MAIN FCS
+// GHL account ON PURPOSE (James 2026-06-17) — he follows up on everyone who tested the line;
+// the website-demo sub-account is throwaway. A GHL workflow on this inbound webhook tags them
+// as a website text-line webform lead and, ~20-30 min later, has FCS Echo text to ask about
+// the demo + book a real one. The source field (set below) distinguishes these in reporting.
+//
+// Two flavors share this handler:
+//   • Gate form  [data-demo-gate, data-unlocks="#sel"] — name/email/phone filter in front of the
+//     live-line chips (James 2026-06-17). On success it hides itself and REVEALS the chip block,
+//     then remembers the unlock in localStorage so a returning visitor skips straight to the chips.
+//   • Fallback form (Mode B) — phone-only; shows the "keep an eye on your texts" success note.
+const DEMO_UNLOCK_KEY = "fcs_demo_unlocked";
+
+function revealDemoChips(form) {
+  const target = form.dataset.unlocks && document.querySelector(form.dataset.unlocks);
+  if (!target) return;
+  form.hidden = true;
+  target.hidden = false;
+  const firstChip = target.querySelector(".echo-demo-chip");
+  if (firstChip) firstChip.focus({ preventScroll: true });
+}
+
+// Returning visitor who already unlocked: skip the gate, show the chips immediately.
+document.querySelectorAll("[data-demo-gate]").forEach((form) => {
+  let unlocked = false;
+  try { unlocked = localStorage.getItem(DEMO_UNLOCK_KEY) === "1"; } catch (e) { /* private mode */ }
+  if (unlocked) revealDemoChips(form);
+});
+
 document.querySelectorAll(".echo-demo-form").forEach((form) => {
   let demoSubmitting = false;
+  const isGate = form.hasAttribute("data-demo-gate");
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -356,38 +384,56 @@ document.querySelectorAll(".echo-demo-form").forEach((form) => {
     const successEl = form.querySelector(".echo-demo-success");
     const errorEl = form.querySelector(".echo-demo-error");
     const phoneInput = form.querySelector('[name="phone"]');
+    const firstInput = form.querySelector('[name="first_name"]');
+    const lastInput = form.querySelector('[name="last_name"]');
+    const emailInput = form.querySelector('[name="email"]');
     const honeypot = form.querySelector('[name="company_website"]');
     const originalLabel = btn.textContent;
+
+    const showError = (msg, focusEl) => {
+      if (errorEl) { errorEl.textContent = msg; errorEl.hidden = false; }
+      if (focusEl) focusEl.focus();
+    };
 
     if (successEl) successEl.hidden = true;
     if (errorEl) errorEl.hidden = true;
 
-    const phoneDigits = (phoneInput.value || "").replace(/\D/g, "");
-    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
-      if (errorEl) {
-        errorEl.textContent = "That phone number doesn’t look complete — please double-check it.";
-        errorEl.hidden = false;
+    // Gate requires first + last name and a valid-looking email before phone.
+    if (isGate) {
+      if (firstInput && !firstInput.value.trim()) return showError("Please enter your first name.", firstInput);
+      if (lastInput && !lastInput.value.trim()) return showError("Please enter your last name.", lastInput);
+      const email = emailInput ? emailInput.value.trim() : "";
+      if (emailInput && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return showError("Please enter a valid email address.", emailInput);
       }
-      phoneInput.focus();
-      return;
     }
 
-    // Honeypot tripped → pretend success, send nothing
+    const phoneDigits = (phoneInput.value || "").replace(/\D/g, "");
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      return showError("That phone number doesn’t look complete — please double-check it.", phoneInput);
+    }
+
+    // Honeypot tripped → pretend success, send nothing.
     if (honeypot && honeypot.value.trim() !== "") {
-      if (successEl) successEl.hidden = false;
-      form.reset();
+      if (isGate) revealDemoChips(form);
+      else if (successEl) { successEl.hidden = false; form.reset(); }
       return;
     }
 
     demoSubmitting = true;
     btn.disabled = true;
-    btn.textContent = "Sending...";
+    btn.textContent = isGate ? "Unlocking..." : "Sending...";
 
+    const consentEl = form.querySelector('[name="transactional_consent"]');
+    const marketingEl = form.querySelector('[name="marketing_consent"]');
     const data = Object.assign({
+      first_name: firstInput ? firstInput.value.trim() : "",
+      last_name: lastInput ? lastInput.value.trim() : "",
+      email: emailInput ? emailInput.value.trim() : "",
       phone: phoneInput.value,
-      transactional_consent: form.querySelector('[name="transactional_consent"]').checked,
-      marketing_consent: form.querySelector('[name="marketing_consent"]').checked,
-      source: "FCS Website — Text Echo Demo Request",
+      transactional_consent: consentEl ? consentEl.checked : false,
+      marketing_consent: marketingEl ? marketingEl.checked : false,
+      source: isGate ? "FCS Website — Live Demo Unlock" : "FCS Website — Text Echo Demo Request",
       page: window.location.href,
       referrer: document.referrer || "",
     }, window.fcsGetUtms ? window.fcsGetUtms() : {});
@@ -399,9 +445,15 @@ document.querySelectorAll(".echo-demo-form").forEach((form) => {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("webhook " + res.status);
-      if (successEl) successEl.hidden = false;
-      if (window.fcsTrack) window.fcsTrack("echo_demo_request_submitted");
-      form.reset();
+      if (isGate) {
+        try { localStorage.setItem(DEMO_UNLOCK_KEY, "1"); } catch (e) { /* private mode */ }
+        if (window.fcsTrack) window.fcsTrack("echo_demo_unlocked");
+        revealDemoChips(form);
+      } else {
+        if (successEl) successEl.hidden = false;
+        if (window.fcsTrack) window.fcsTrack("echo_demo_request_submitted");
+        form.reset();
+      }
     } catch (err) {
       if (errorEl) {
         errorEl.innerHTML = 'Something went wrong. Please email us at <a href="mailto:james@fullcalendarsystems.com">james@fullcalendarsystems.com</a>';

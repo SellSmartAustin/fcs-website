@@ -371,22 +371,80 @@
               <div data-demo-mode="live" hidden>
                 <!-- Live demo line: Linq iMessage 512-373-9490 ("Lone Star Roofing" — our fictional demo
                      company). The visitor plays a homeowner; Echo plays the roofing company, then reveals.
-                     Each chip opens Messages with the number + opener pre-filled — one tap to send. -->
-                <p class="echo-demo-roleplay-intro">You're the homeowner. Echo's the roofing company. Pick an opener (or write your own) and watch how fast your leads would be answered:</p>
-                <div class="echo-demo-chips">
-                  <a class="echo-demo-chip" href="sms:+15123739490?&body=Hey%2C%20I%20think%20I%20just%20got%20hail%20damage">🌩️ "Hey, I think I just got hail damage"</a>
-                  <a class="echo-demo-chip" href="sms:+15123739490?&body=I%20have%20a%20leak%20in%20my%20roof">💧 "I have a leak in my roof"</a>
-                  <a class="echo-demo-chip" href="sms:+15123739490?&body=How%20much%20does%20a%20full%20replacement%20cost%3F">💰 "How much does a full replacement cost?"</a>
-                  <a class="echo-demo-chip" href="sms:+15123739490?&body=Hola%2C%20creo%20que%20tengo%20da%C3%B1o%20de%20granizo%20en%20mi%20techo">🇲🇽 "Hola, creo que tengo daño de granizo"</a>
+                     Each chip opens Messages with the number + opener pre-filled — one tap to send.
+
+                     GATE (James 2026-06-17): name/email/phone are captured BEFORE the chips appear —
+                     a friction filter that keeps trolls/competitors off the live line and captures the
+                     genuinely-interested. On submit the lead posts to GHL and the chips reveal in place.
+                     Unlock persists in localStorage (fcs_demo_unlocked) so a returning visitor skips it. -->
+                <form class="echo-demo-form echo-demo-gate" data-demo-gate data-unlocks="#echo-demo-unlocked" data-webhook="https://services.leadconnectorhq.com/hooks/naMSy7VSuk58oQgeKxPy/webhook-trigger/6fb35b30-b6a3-433d-82db-bbfe2f8530c7" novalidate>
+                  <!-- Webhook routing (James 2026-06-17, DECIDED — do NOT "fix" to the sub-account):
+                       these leads post to the MAIN FCS GHL account ON PURPOSE so James follows up on
+                       everyone who tested the line. The website-demo sub-account is throwaway. A GHL
+                       workflow on this inbound webhook tags the contact as a website text-line webform
+                       lead and, ~20-30 min later, has FCS Echo text to ask about the demo + book a real
+                       one. source field below ("FCS Website — Live Demo Unlock") distinguishes them. -->
+                  <p class="echo-demo-form-title">See it live on your own phone 👇</p>
+                  <p class="echo-demo-gate-sub">Tell us where to reach you and we'll unlock the live demo line. Text it yourself and watch how fast your leads would get answered.</p>
+                  <div class="echo-demo-gate-grid">
+                    <div class="echo-demo-gate-row">
+                      <span>
+                        <label class="sr-only" for="echo-demo-gate-first">First Name</label>
+                        <input type="text" name="first_name" id="echo-demo-gate-first" required autocomplete="given-name" placeholder="First name">
+                      </span>
+                      <span>
+                        <label class="sr-only" for="echo-demo-gate-last">Last Name</label>
+                        <input type="text" name="last_name" id="echo-demo-gate-last" required autocomplete="family-name" placeholder="Last name">
+                      </span>
+                    </div>
+                    <label class="sr-only" for="echo-demo-gate-email">Email</label>
+                    <input type="email" name="email" id="echo-demo-gate-email" required autocomplete="email" inputmode="email" placeholder="you@email.com">
+                    <label class="sr-only" for="echo-demo-gate-phone">Phone Number</label>
+                    <input type="tel" name="phone" id="echo-demo-gate-phone" required autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" data-phone-format>
+                  </div>
+                  <button class="btn btn-primary echo-demo-gate-btn" type="submit">Unlock the Live Demo</button>
+                  <!-- Honeypot — bots fill it, humans never see it. Submission is silently dropped if non-empty. -->
+                  <div class="hp-wrap" aria-hidden="true">
+                    <label>Company Website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
+                  </div>
+
+                  <div class="consent-block">
+                    <label class="consent-option">
+                      <input type="checkbox" name="transactional_consent">
+                      <span>I consent to receive non-marketing text messages from Full Calendar Systems LLC about demo scheduling and appointment confirmations. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <label class="consent-option">
+                      <input type="checkbox" name="marketing_consent">
+                      <span>I consent to receive marketing text messages about special offers, service updates, and promotions from Full Calendar Systems LLC at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.</span>
+                    </label>
+                    <p class="consent-disclaimer">Consent is not required to submit this form or receive our services.</p>
+                    <p class="consent-disclaimer">By submitting, you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>. Your info will only be used to contact you about your inquiry. We never sell or share it with third parties.</p>
+                    <div class="consent-links">
+                      <a href="privacy-policy.html">Privacy Policy</a>
+                      <a href="terms.html">Terms of Service</a>
+                    </div>
+                  </div>
+                  <p class="form-note form-note-error echo-demo-error" hidden>Something went wrong. Please email us at <a href="mailto:james@fullcalendarsystems.com">james@fullcalendarsystems.com</a></p>
+                </form>
+
+                <!-- Chips — hidden until the gate is passed (then revealed in place by script.js). -->
+                <div class="echo-demo-unlocked" id="echo-demo-unlocked" hidden>
+                  <p class="echo-demo-roleplay-intro">You're the homeowner. Echo's the roofing company. Pick an opener (or write your own) and watch how fast your leads would be answered:</p>
+                  <div class="echo-demo-chips">
+                    <a class="echo-demo-chip" href="sms:+15123739490?&body=Hey%2C%20I%20think%20I%20just%20got%20hail%20damage">🌩️ "Hey, I think I just got hail damage"</a>
+                    <a class="echo-demo-chip" href="sms:+15123739490?&body=I%20have%20a%20leak%20in%20my%20roof">💧 "I have a leak in my roof"</a>
+                    <a class="echo-demo-chip" href="sms:+15123739490?&body=How%20much%20does%20a%20full%20replacement%20cost%3F">💰 "How much does a full replacement cost?"</a>
+                    <a class="echo-demo-chip" href="sms:+15123739490?&body=Hola%2C%20creo%20que%20tengo%20da%C3%B1o%20de%20granizo%20en%20mi%20techo">🇲🇽 "Hola, creo que tengo daño de granizo"</a>
+                  </div>
+                  <div class="echo-demo-number-row">
+                    <span class="echo-demo-number">Or text us directly: <a href="sms:+15123739490">(512) 373-9490</a></span>
+                    <details class="echo-demo-qr">
+                      <summary>On a computer? Scan to text 📱</summary>
+                      <img src="qr-demo-line.svg" alt="QR code — scan with your phone to text the live demo line" width="140" height="140" loading="lazy">
+                    </details>
+                  </div>
+                  <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
                 </div>
-                <div class="echo-demo-number-row">
-                  <span class="echo-demo-number">Or text us directly: <a href="sms:+15123739490">(512) 373-9490</a></span>
-                  <details class="echo-demo-qr">
-                    <summary>On a computer? Scan to text 📱</summary>
-                    <img src="qr-demo-line.svg" alt="QR code — scan with your phone to text the live demo line" width="140" height="140" loading="lazy">
-                  </details>
-                </div>
-                <p class="echo-demo-note">Standard message rates apply. You're texting our live demo line — reply STOP anytime.</p>
               </div>
 
               <div data-demo-mode="fallback">

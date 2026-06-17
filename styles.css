@@ -2321,6 +2321,41 @@ h1 {
   margin-bottom: 0;
 }
 
+/* ── Live-demo gate: name/email/phone filter in front of the chips ── */
+.echo-demo-gate-sub {
+  color: var(--muted);
+  margin: -6px 0 16px;
+  line-height: 1.5;
+}
+
+.echo-demo-gate-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.echo-demo-gate-row {
+  display: flex;
+  gap: 10px;
+}
+
+.echo-demo-gate-row > span {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .echo-demo-gate-row {
+    flex-direction: column;
+  }
+}
+
+.echo-demo-gate-btn {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
 @media (max-width: 900px) {
   .echo-demo-grid {
     grid-template-columns: 1fr;
