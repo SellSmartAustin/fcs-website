@@ -255,9 +255,9 @@ document.querySelectorAll("[data-phone-format]").forEach((input) => {
 });
 
 // ── Text Echo Live — demo mode toggle ──
-// Mode A [data-demo-mode="live"]     — tap-to-text demo line (Linq 512-373-9490, real number
-//                                      already in the HTML). STAGED — flip after the E2E test
-//                                      of the website-demo Echo tenant passes.
+// Mode A [data-demo-mode="live"]     — tap-to-text demo line (SendBlue 512-468-5443, real number
+//                                      already in the HTML). Active after the SendBlue website-demo
+//                                      Echo tenant migration.
 // Mode B [data-demo-mode="fallback"] — lead-capture form; James texts back manually.
 // LIVE 2026-06-13: flipped to Mode A after full E2E (incl. Spanish) of the website-demo Echo tenant passed.
 const DEMO_LINE_LIVE = true;
